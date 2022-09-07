@@ -1,0 +1,196 @@
+@startuml ess
+    entity User {
+        * id_user : VARCHAR
+        --
+        * username : VARCHAR
+        * email : VARCHAR
+        * password : VARCHAR
+        * status : enum
+    }
+    entity Role {
+        * id_role : VARCHAR
+        --
+        * role_type : VARCHAR
+    }
+    entity Employe {
+        * id_employee : VARCHAR
+        --
+        * id_user : VARCHAR
+        * NIK : INT
+        * nama : VARCHAR
+        * tempat_lahir : VARCHAR
+        * tanggal_lahir : DATE
+        * alamat_ktp : VARCHAR
+        * pendidikan_terakhir : VARCHAR
+        * nama_pendidikan_terakhir : VARCHAR
+        * jurusan_pendidikan_terakhir : VARCHAR
+        * alamat_email_aktif : VARCHAR
+        * no_tlp_aktif : VARCHAR
+        * kontak_darurat : VARCHAR
+        no_npwp : VARCHAR
+        no_kartu_keluarga : VARCHAR
+        status_saat_ini : enum
+        tanggungan : INT
+        no_rek : VARCHAR
+        nama_rek : VARCHAR
+        no_bpjs_kesehatan : VARCHAR
+        status_bpjs_kesehatan : enum
+        status_bpjs_ketenaga_kerjaan : enum
+        created_at : DATE
+        updated_at : DATE
+        
+    }
+    entity EmployeeFile {
+        * id_employee_file : VARCHAR
+        --
+        * id_employee : VARCHAR
+        file_bpjs_kesehatan : VARCHAR
+        file_bpjs_ketenagakerjaan : VARCHAR
+        file_npwp : VARCHAR
+        * file_kartu_keluarga : VARCHAR
+        * file_ijazah : VARCHAR
+        file_sertifikat_keahlian : VARCHAR
+        file_ktp : VARCHAR
+        created_at : DATE
+        updated_at : DATE
+    }
+    entity EmployeePosition{
+        * id_employee_position : VARCHAR
+        --
+        * position_name : VARCHAR
+        * id_employee : VARCHAR
+    }
+    entity EmployeesDirectSubOrdinate {
+        * id_employee_direct : VARCHAR
+        --
+        * id_employee_position: VARCHAR
+        * id_employee : VARCHAR
+    }
+    entity CurrentLeave {
+        * id_employee : VARCHAR
+        --
+        * current_leave : float
+    }   
+    entity Leave {
+        * id : VARCHAR
+        --
+        * id_employee : VARCHAR
+        tanggal_penerbitan_form : DATE
+        dari_tanggal : DATE
+        keterangan_cuty : TEXT
+        no_tlp : VARCHAR
+        alamat_selama_cuty : VARCHAR
+        jenis_cuty : enum
+        total_hari : INT
+        * sedang_di_project : enum
+        tugas_yang_diserahkan : VARCHAR
+        pegawai_pengganti : VARCHAR
+        catatan : TEXT
+        issu_by : TEXT
+        leave_type : enum
+        status_approval : enum
+    }
+    entity ActivityTimesheet {
+        * id_activity : VARCHAR
+        --
+        * name_activity : VARCHAR
+    }
+
+    entity Project {
+        * id_project : VARCHAR
+        --
+        * project_name : VARCHAR
+        * client_name : VARCHAR
+    }
+
+    entity Timesheet{
+        * id_timesheet : VARCHAR
+        --
+        * id_employee : VARCHAR
+        * id_departement : VARCHAR
+        * start_date : DATE
+        * end_date : DATE
+    }
+
+    entity TimesheetDetail {
+        * id_detail_timesheet : VARCHAR
+        --
+        * id_timesheet : VARCHAR
+        * id_activity : VARCHAR
+        * id_project : VARCHAR
+        * created_at : DATE
+        * updated_at : DATE
+        * project_name : VARCHAR
+        * work_description : VARCHAR
+        * break_hours : TIME
+        * total_hours : float
+        * over_time_hours : float
+        * regular_hours : float
+        * is_holiday : enum
+        * lead_approve : VARCHAR
+        * status_approval : enum
+    }
+
+    entity Reimburstment {
+        * id_reimburstment : VARCHAR
+        --
+        * id_employee : VARCHAR
+        * no_vourcher : VARCHAR
+        * remburstment_payment_type : enunm
+        Bank : VARCHAR
+        name_bank : VARCHAR
+        account_no : VARCHAR
+        bank_branch : VARCHAR
+        struck_reimburstment : VARCHAR
+         * transaction_date : DATE
+        * account_code : VARCHAR
+        * description : TEXT
+        * total_amount : INT
+        notes : TEXT
+    }
+
+    entity StatusApprovReimburstment {
+        * id_status_reimburstment : VARCHAR
+        --
+        * status_approv_lead : enum
+        * date_approval_lead : DATE
+        * approval_for_coo : enum
+        status_approval_coo : enum
+        date_approval_coo : DATE
+        * status_approval_hr : enum
+        * date_approval_hr : DATE
+        * status_approval_finance : enum
+        * date_approval_finance : DATE
+        * status_receipt : enum
+        * date_receipt : DATE
+    }
+
+    entity Absensi {
+        * id_absensi : VARCHAR
+        --
+        * id_employee : VARCHAR
+        * tanggal_absen
+        * absen_pagi : TIME
+        * absen_pulang : TIME
+        id_leave : VARCHAR
+        keterangan : TEXT
+    }
+
+
+User ||--|| Employe :  Employee Account
+User ||--|| Role : user role
+Employe ||--|| EmployeeFile : EmployeeFile
+Employe ||--|| EmployeePosition : EmployeePosition Lead
+Employe }|--|| EmployeesDirectSubOrdinate : Employee Direct
+EmployeePosition ||--|{ EmployeesDirectSubOrdinate : Employee Lead
+Employe ||--|| CurrentLeave : Current Leave
+Employe ||--o{ Leave : Submit Leave
+Employe ||--|{ Timesheet : Employee Timesheet
+ActivityTimesheet ||--|{ TimesheetDetail : Timesheet Activity
+Project ||--|{ TimesheetDetail : Project in timesheet
+Timesheet ||--|{ TimesheetDetail : Detail Timesheet
+Employe ||--|{ Reimburstment : submit reimbursment
+Reimburstment ||--|{ StatusApprovReimburstment : Approval Reimburstment
+Employe ||--o{ Absensi : absen employee
+Leave ||--O{ Absensi : employee cuti
+@enduml
