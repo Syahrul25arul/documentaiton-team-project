@@ -66,10 +66,15 @@
         created_at : DATE
         updated_at : DATE
     }
+    entity Position {
+        * id_position : VARCHAR
+        --
+        * position_name : VARCHAR
+    }
     entity EmployeePosition{
         * id_employee_position : VARCHAR
         --
-        * position_name : VARCHAR
+        * id_position : VARCHAR
         * id_employee : VARCHAR
     }
     entity EmployeeMember {
@@ -103,8 +108,8 @@
         updated_at : VARCHAR
     }
     entity AbsenConfiguration {
-        * minimal_jam_kerja : TIME(HH:MI)
-        * maksimal_jam_kerja : TIME(HH:MI)
+        * minimal_masuk_jam_kerja : TIME(HH:MI)
+        * maksimal_masuk_jam_kerja : TIME(HH:MI)
         * durasi_jam_kerja : INT
         * interval_keterlambatan : INT
         * bobot_keterlambatan : float
@@ -127,11 +132,13 @@
     entity Approval {
         * id_approval : VARCHAR
         --
-        type_approval : VARCHAR
+        feature_type : enum
         whos_approv : VARCHAR
         status_approv : VARCHAR
-        feature_approval : VARCHAR
+        feature_id : VARCHAR
         crated_at : timestamps
+        updated_at : timestamps
+        keterangan : TEXT
     }
     entity Notes {
         * id_notes : VARCHAR
@@ -141,8 +148,55 @@
         feature_type : VARCHAR
         created_at : timestamps
     }
-    entity Leave {
-        * id : VARCHAR
+    
+    entity TimesheetConfiguration {
+        * batas_pengeditan_timesheet : INT
+        * PIC_timesheet : VARCHAR
+    }
+    entity Timesheet{
+        * id_timesheet : VARCHAR
+        --
+        * id_employee : VARCHAR
+        * id_employee_position : VARCHAR
+        * id_activity : VARCHAR
+        * id_project : VARCHAR
+        * crated_at : DATE
+        updated_at : Date
+        * is_holiday : enum
+    }
+    entity ActivityTimesheet {
+        * id_activity : VARCHAR
+        --
+        * name_activity : VARCHAR
+    }
+    entity TimesheetDetail {
+        * id_detail_timesheet : VARCHAR
+        --
+        * id_timesheet : VARCHAR
+        * created_at : Time
+        * updated_at : Time
+        * work_description : VARCHAR
+        * break_hours : TIME
+        * total_hours : float
+        * over_time_hours : float
+        * regular_hours : float
+    }
+    entity CutiConfiguration {
+        * status_reset_cuti
+        * bulan_reset_cuti
+        * factor_reset_cuti
+        * maksimal_cuti_perbulan
+        * PIC_cuti
+    }
+    entity CutiType {
+        * id_leave_type : VARCHAR
+        --
+        * cuti_type_name : VARCHAR
+        * potongan_cuti : FLOAT
+        * ditujukan : ENUM
+    }
+    entity Cuti {
+        * id_cuti : VARCHAR
         --
         * id_employee : VARCHAR
         tanggal_penerbitan_form : DATE
@@ -159,49 +213,6 @@
         issu_by : TEXT
         leave_type : enum
         status_approval : enum
-    }
-    entity TimesheetConfiguration {
-        * batas_pengeditan_timesheet : INT
-        * PIC_timesheet : VARCHAR
-    }
-    entity Timesheet{
-        * id_timesheet : VARCHAR
-        --
-        * id_employee : VARCHAR
-        * id_departement : VARCHAR
-        * crated_at : DATE
-    }
-    
-    entity ActivityTimesheet {
-        * id_activity : VARCHAR
-        --
-        * name_activity : VARCHAR
-    }
-    entity TimesheetDetail {
-        * id_detail_timesheet : VARCHAR
-        --
-        * id_timesheet : VARCHAR
-        * id_activity : VARCHAR
-        * id_project : VARCHAR
-        * created_at : Time
-        * updated_at : Time
-        * project_name : VARCHAR
-        * work_description : VARCHAR
-        * break_hours : TIME
-        * total_hours : float
-        * over_time_hours : float
-        * regular_hours : float
-        * is_holiday : enum
-        * lead_approve : VARCHAR
-        * status_approval : enum
-    }
-
-    entity CutiConfiguration {
-        * status_reset_cuti
-        * bulan_reset_cuti
-        * factor_reset_cuti
-        * maksimal_cuti_perbulan
-        * PIC_cuti
     }
 
     ' entity Reimburstment {
@@ -245,6 +256,7 @@ User ||--|| Employe :  Employee Account
 User ||--|| Role : user role
 Employe ||--|| EmployeSecondaryData : Employee secondary data
 Employe ||--|| EmployeeFile : EmployeeFile
+Position ||--o{ EmployeePosition : Employe Position
 Employe ||--|| EmployeePosition : EmployeePosition Lead
 EmployeePosition }o--o{ EmployeeMember : Employee Member
 Employe ||--o{ Absensi : absen employee
@@ -252,20 +264,21 @@ Client ||--o{ Project : Client project
 Project ||--o{ EmployeOnProject : project handled
 Employe ||-o{ EmployeOnProject : Employee handle projects
 EmployeePosition ||--|{ Approval : PIC approval
-Employe ||--|| AbsenConfiguration : PIC configuration untuk absensi
+EmployeePosition ||--|| AbsenConfiguration : PIC configuration untuk absensi
 Absensi ||--|{ Approval : Absensi Approval
 Employe ||--o{ Notes : Employee create notes
 Absensi ||--o{ Notes : notes absensi
 Employe ||--|| CurrentLeave : Sisa jatah cuti employee
-Employe ||--o{ Leave : Submit Leave
-Leave ||--o{ Absensi : employee cuti
-Employe ||--|| TimesheetConfiguration : Timeshete PIC and configuration
+Employe ||--o{ Cuti : Employee mengajukan Cuti
+Cuti ||--o{ Absensi : absensi cuti
+EmployeePosition ||--|| TimesheetConfiguration : Timeshete PIC and configuration
 Timesheet ||--o{ TimesheetDetail : Timesheet detail
 ActivityTimesheet ||--|{ TimesheetDetail : Acitivity Timesheet
 Timesheet ||--o{ Approval : Approval for timesheet
 Timesheet ||--o{ Notes : Notes for timesheet
 TimesheetDetail ||--o{ Notes : Notes for timesheet detail
-Employe ||--|| CutiConfiguration : PIC cuti
+EmployeePosition ||--|| CutiConfiguration : PIC cuti
+Employe ||--|{ Timesheet : Employee Timesheet
 ' Employe ||--|{ Timesheet : Employee Timesheet
 ' ActivityTimesheet ||--|{ TimesheetDetail : Timesheet Activity
 ' Project ||--|{ TimesheetDetail : Project in timesheet
