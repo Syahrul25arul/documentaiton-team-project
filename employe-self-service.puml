@@ -12,6 +12,14 @@
         --
         * role_type : VARCHAR
     }
+    entity OurCompany {
+        nama_company : VARCHAR
+        alamat_company : VARCHAR
+        contact : VARCHAR
+        lattitude :  VARCHAR
+        longitude : VARCHAR
+        logo : VARCHAR
+    }
     entity Employe {
         * id_employee : VARCHAR
         --
@@ -27,6 +35,11 @@
         * alamat_email_aktif : VARCHAR
         * no_tlp_aktif : VARCHAR
         * kontak_darurat : VARCHAR
+    }
+     entity EmployeSecondaryData {
+        * id_employe_secondary : VARCHAR
+        --
+        * id_employee
         no_npwp : VARCHAR
         no_kartu_keluarga : VARCHAR
         status_saat_ini : enum
@@ -38,7 +51,6 @@
         status_bpjs_ketenaga_kerjaan : enum
         created_at : DATE
         updated_at : DATE
-        
     }
     entity EmployeeFile {
         * id_employee_file : VARCHAR
@@ -60,17 +72,75 @@
         * position_name : VARCHAR
         * id_employee : VARCHAR
     }
-    entity EmployeesDirectSubOrdinate {
-        * id_employee_direct : VARCHAR
-        --
-        * id_employee_position: VARCHAR
-        * id_employee : VARCHAR
+    entity EmployeeMember {
+        * id_employee_lead: VARCHAR
+        * id_employee_direct_sub : VARCHAR
     }
     entity CurrentLeave {
         * id_employee : VARCHAR
         --
         * current_leave : float
-    }   
+    }
+    entity Client {
+        * id_client : VARCHAR
+        --
+        * nama_client : VARCHAR
+        * lattitude :  VARCHAR
+        * longitude : VARCHAR
+    }
+    entity Project {
+        * id_project : VARCHAR
+        -- 
+        * id_client : VARCHAR
+        * project_name : VARCHAR
+    }
+    entity EmployeOnProject {
+        * id_employe_on_project : VARCHAR
+        --
+        * id_employee : VARCHAR
+        * id_project : VARCHAR
+        created_at : VARCHAR
+        updated_at : VARCHAR
+    }
+    entity AbsenConfiguration {
+        * minimal_jam_kerja : TIME(HH:MI)
+        * maksimal_jam_kerja : TIME(HH:MI)
+        * durasi_jam_kerja : INT
+        * interval_keterlambatan : INT
+        * bobot_keterlambatan : float
+        * maksimal_bobot_keterlambatan : FLOAT
+        * pic_absensi : id_employee
+    }
+    entity Absensi {
+        * id_absensi : VARCHAR
+        --
+        * id_employee : VARCHAR
+        id_leave : VARCHAR
+        * tanggal_absen
+        * absen_pagi : TIME
+        * absen_pulang : TIME
+        terlambat_kerja : INT
+        bobot : float
+        over_time : INT
+        keterangan : TEXT
+    }
+    entity Approval {
+        * id_approval : VARCHAR
+        --
+        type_approval : VARCHAR
+        whos_approv : VARCHAR
+        status_approv : VARCHAR
+        feature_approval : VARCHAR
+        crated_at : timestamps
+    }
+    entity Notes {
+        * id_notes : VARCHAR
+        --
+        * id_employee : VARCHAR
+        * feature_id : VARCHAR
+        feature_type : VARCHAR
+        created_at : timestamps
+    }
     entity Leave {
         * id : VARCHAR
         --
@@ -90,36 +160,31 @@
         leave_type : enum
         status_approval : enum
     }
-    entity ActivityTimesheet {
-        * id_activity : VARCHAR
-        --
-        * name_activity : VARCHAR
+    entity TimesheetConfiguration {
+        * batas_pengeditan_timesheet : INT
+        * PIC_timesheet : VARCHAR
     }
-
-    entity Project {
-        * id_project : VARCHAR
-        --
-        * project_name : VARCHAR
-        * client_name : VARCHAR
-    }
-
     entity Timesheet{
         * id_timesheet : VARCHAR
         --
         * id_employee : VARCHAR
         * id_departement : VARCHAR
-        * start_date : DATE
-        * end_date : DATE
+        * crated_at : DATE
     }
-
+    
+    entity ActivityTimesheet {
+        * id_activity : VARCHAR
+        --
+        * name_activity : VARCHAR
+    }
     entity TimesheetDetail {
         * id_detail_timesheet : VARCHAR
         --
         * id_timesheet : VARCHAR
         * id_activity : VARCHAR
         * id_project : VARCHAR
-        * created_at : DATE
-        * updated_at : DATE
+        * created_at : Time
+        * updated_at : Time
         * project_name : VARCHAR
         * work_description : VARCHAR
         * break_hours : TIME
@@ -131,66 +196,81 @@
         * status_approval : enum
     }
 
-    entity Reimburstment {
-        * id_reimburstment : VARCHAR
-        --
-        * id_employee : VARCHAR
-        * no_vourcher : VARCHAR
-        * remburstment_payment_type : enunm
-        Bank : VARCHAR
-        name_bank : VARCHAR
-        account_no : VARCHAR
-        bank_branch : VARCHAR
-        struck_reimburstment : VARCHAR
-         * transaction_date : DATE
-        * account_code : VARCHAR
-        * description : TEXT
-        * total_amount : INT
-        notes : TEXT
+    entity CutiConfiguration {
+        * status_reset_cuti
+        * bulan_reset_cuti
+        * factor_reset_cuti
+        * maksimal_cuti_perbulan
+        * PIC_cuti
     }
 
-    entity StatusApprovReimburstment {
-        * id_status_reimburstment : VARCHAR
-        --
-        * status_approv_lead : enum
-        * date_approval_lead : DATE
-        * approval_for_coo : enum
-        status_approval_coo : enum
-        date_approval_coo : DATE
-        * status_approval_hr : enum
-        * date_approval_hr : DATE
-        * status_approval_finance : enum
-        * date_approval_finance : DATE
-        * status_receipt : enum
-        * date_receipt : DATE
-    }
+    ' entity Reimburstment {
+    '     * id_reimburstment : VARCHAR
+    '     --
+    '     * id_employee : VARCHAR
+    '     * no_vourcher : VARCHAR
+    '     * remburstment_payment_type : enunm
+    '     Bank : VARCHAR
+    '     name_bank : VARCHAR
+    '     account_no : VARCHAR
+    '     bank_branch : VARCHAR
+    '     struck_reimburstment : VARCHAR
+    '      * transaction_date : DATE
+    '     * account_code : VARCHAR
+    '     * description : TEXT
+    '     * total_amount : INT
+    '     notes : TEXT
+    ' }
 
-    entity Absensi {
-        * id_absensi : VARCHAR
-        --
-        * id_employee : VARCHAR
-        * tanggal_absen
-        * absen_pagi : TIME
-        * absen_pulang : TIME
-        id_leave : VARCHAR
-        keterangan : TEXT
-    }
+    ' entity StatusApprovReimburstment {
+    '     * id_status_reimburstment : VARCHAR
+    '     --
+    '     * status_approv_lead : enum
+    '     * date_approval_lead : DATE
+    '     * approval_for_coo : enum
+    '     status_approval_coo : enum
+    '     date_approval_coo : DATE
+    '     * status_approval_hr : enum
+    '     * date_approval_hr : DATE
+    '     * status_approval_finance : enum
+    '     * date_approval_finance : DATE
+    '     * status_receipt : enum
+    '     * date_receipt : DATE
+    ' }
+
+    
 
 
 User ||--|| Employe :  Employee Account
 User ||--|| Role : user role
+Employe ||--|| EmployeSecondaryData : Employee secondary data
 Employe ||--|| EmployeeFile : EmployeeFile
 Employe ||--|| EmployeePosition : EmployeePosition Lead
-Employe }|--|| EmployeesDirectSubOrdinate : Employee Direct
-EmployeePosition ||--|{ EmployeesDirectSubOrdinate : Employee Lead
-Employe ||--|| CurrentLeave : Current Leave
-Employe ||--o{ Leave : Submit Leave
-Employe ||--|{ Timesheet : Employee Timesheet
-ActivityTimesheet ||--|{ TimesheetDetail : Timesheet Activity
-Project ||--|{ TimesheetDetail : Project in timesheet
-Timesheet ||--|{ TimesheetDetail : Detail Timesheet
-Employe ||--|{ Reimburstment : submit reimbursment
-Reimburstment ||--|{ StatusApprovReimburstment : Approval Reimburstment
+EmployeePosition }o--o{ EmployeeMember : Employee Member
 Employe ||--o{ Absensi : absen employee
-Leave ||--O{ Absensi : employee cuti
+Client ||--o{ Project : Client project
+Project ||--o{ EmployeOnProject : project handled
+Employe ||-o{ EmployeOnProject : Employee handle projects
+EmployeePosition ||--|{ Approval : PIC approval
+Employe ||--|| AbsenConfiguration : PIC configuration untuk absensi
+Absensi ||--|{ Approval : Absensi Approval
+Employe ||--o{ Notes : Employee create notes
+Absensi ||--o{ Notes : notes absensi
+Employe ||--|| CurrentLeave : Sisa jatah cuti employee
+Employe ||--o{ Leave : Submit Leave
+Leave ||--o{ Absensi : employee cuti
+Employe ||--|| TimesheetConfiguration : Timeshete PIC and configuration
+Timesheet ||--o{ TimesheetDetail : Timesheet detail
+ActivityTimesheet ||--|{ TimesheetDetail : Acitivity Timesheet
+Timesheet ||--o{ Approval : Approval for timesheet
+Timesheet ||--o{ Notes : Notes for timesheet
+TimesheetDetail ||--o{ Notes : Notes for timesheet detail
+Employe ||--|| CutiConfiguration : PIC cuti
+' Employe ||--|{ Timesheet : Employee Timesheet
+' ActivityTimesheet ||--|{ TimesheetDetail : Timesheet Activity
+' Project ||--|{ TimesheetDetail : Project in timesheet
+' Timesheet ||--|{ TimesheetDetail : Detail Timesheet
+' Employe ||--|{ Reimburstment : submit reimbursment
+' Reimburstment ||--|{ StatusApprovReimburstment : Approval Reimburstment
+
 @enduml
