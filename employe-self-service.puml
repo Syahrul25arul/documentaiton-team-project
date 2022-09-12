@@ -1,4 +1,10 @@
 @startuml ess
+    entity EmaiilValidation {
+        * id_email_validation : INT
+        --
+        * name_email_type : VARCHAR
+        * status : enum
+    }
     entity User {
         * id_user : VARCHAR
         --
@@ -6,11 +12,7 @@
         * email : VARCHAR
         * password : VARCHAR
         * status : enum
-    }
-    entity Role {
-        * id_role : VARCHAR
-        --
-        * role_type : VARCHAR
+        * user_role : enum
     }
     entity OurCompany {
         nama_company : VARCHAR
@@ -35,8 +37,10 @@
         * alamat_email_aktif : VARCHAR
         * no_tlp_aktif : VARCHAR
         * kontak_darurat : VARCHAR
+        * status_employee : enum 
+        * photo_employee : VARCHAR
     }
-     entity EmployeSecondaryData {
+    entity EmployeSecondaryData {
         * id_employe_secondary : VARCHAR
         --
         * id_employee
@@ -78,13 +82,13 @@
         * id_employee : VARCHAR
     }
     entity EmployeeMember {
-        * id_employee_lead: VARCHAR
-        * id_employee_direct_sub : VARCHAR
+        * id_position_lead: VARCHAR
+        * id_position_member : VARCHAR
     }
-    entity CurrentLeave {
+    entity CurrentCuti {
         * id_employee : VARCHAR
         --
-        * current_leave : float
+        * sisa_cuti : float
     }
     entity Client {
         * id_client : VARCHAR
@@ -92,6 +96,7 @@
         * nama_client : VARCHAR
         * lattitude :  VARCHAR
         * longitude : VARCHAR
+        * alamat_client : VARCHAR
     }
     entity Project {
         * id_project : VARCHAR
@@ -114,28 +119,30 @@
         * interval_keterlambatan : INT
         * bobot_keterlambatan : float
         * maksimal_bobot_keterlambatan : FLOAT
-        * pic_absensi : id_employee
+        * pic_absensi : VARCHAR
     }
     entity Absensi {
         * id_absensi : VARCHAR
         --
         * id_employee : VARCHAR
-        id_leave : VARCHAR
+        id_cuti : VARCHAR
         * tanggal_absen
         * absen_pagi : TIME
         * absen_pulang : TIME
         terlambat_kerja : INT
         bobot : float
         over_time : INT
+        status_overtime : enum
         keterangan : TEXT
     }
     entity Approval {
         * id_approval : VARCHAR
         --
-        feature_type : enum
-        whos_approv : VARCHAR
-        status_approv : VARCHAR
-        feature_id : VARCHAR
+        * feature_type : enum
+        * whos_approv : VARCHAR
+        * status_approv : VARCHAR
+        * feature_id : VARCHAR
+        * tujuan_approval : enum
         crated_at : timestamps
         updated_at : timestamps
         keterangan : TEXT
@@ -145,12 +152,12 @@
         --
         * id_employee : VARCHAR
         * feature_id : VARCHAR
+        * Notes : TEXT
         feature_type : VARCHAR
         created_at : timestamps
     }
-    
     entity TimesheetConfiguration {
-        * batas_pengeditan_timesheet : INT
+        * interval_waktu_pembuatan : INT
         * PIC_timesheet : VARCHAR
     }
     entity Timesheet{
@@ -182,14 +189,14 @@
         * regular_hours : float
     }
     entity CutiConfiguration {
-        * status_reset_cuti
-        * bulan_reset_cuti
-        * factor_reset_cuti
-        * maksimal_cuti_perbulan
-        * PIC_cuti
+        * status_reset_cuti : enum
+        * bulan_reset_cuti : INT
+        * factor_reset_cuti : FLOAT
+        * maksimal_cuti_perbulan : INT
+        * PIC_cuti : VARCHAR
     }
     entity CutiType {
-        * id_leave_type : VARCHAR
+        * id_cuti_type : VARCHAR
         --
         * cuti_type_name : VARCHAR
         * potongan_cuti : FLOAT
@@ -208,44 +215,58 @@
         no_tlp : VARCHAR
          alamat_selama_cuty : VARCHAR
         * total_hari : INT
-         sedang_di_project : enum
-        id_project : VARCHAR
+        sedang_di_project : enum
+        status_cuti : VARCHAR
+    }
+    entity CutiWhenOnProject {
+        * id_cuti_on_project : VARCHAR
+        --
+        * id_cuti : VARCHAR
+        * id_project : VARCHAR
+         nama_atasan_client : VARCHAR
+        no_tlp_atasan_client : VARCHAR
         pegawai_pengganti : VARCHAR
         file_approval_client :  VARCHAR
         catatan : TEXT
         issu_by : TEXT
-        status_cuti : VARCHAR
     }
-
     entity ReimburstmentConfiguration {
         PIC_pertama : VARCHAR
         * PIC_kedua : VARCHAR
     }
-
     entity ReimburstmentType {
         * id_reimburstment_type 
         --
         * reimbursment_type_name : VARCHAR
     }
-
     entity Reimburstment {
         * id_reimburstment : VARCHAR
         --
         * id_employee : VARCHAR
         * id_reimburstment_type : VARCHAR
         * no_vourcher : VARCHAR
-        * remburstment_payment_type : enunm
-        Bank : VARCHAR
-        name_bank : VARCHAR
-        account_no : VARCHAR
-        bank_branch : VARCHAR
-        struck_reimburstment : VARCHAR
-         * transaction_date : DATE
+        * deskripsi_reimburstment : TEXT
+        * employee_direct_reimburstment : VARCHAR
+        * remburstment_payment_type : enunm   
+        * transaction_date : DATE
         * account_code : VARCHAR
-        * description : TEXT
         * total_amount : INT
-        notes : TEXT
         status_reimburstment : VARCHAR
+    }
+    entity ReimburstmentTypeTransfert {
+        * id_reimburstment_transfert : VARCHAR
+        --
+        * id_reimburstment : VARCHAR
+        * Bank : VARCHAR
+        * name_bank : VARCHAR
+        * account_no : VARCHAR
+        * bank_branch : VARCHAR
+    }
+    entity ReimburstmentStruckFile {
+        * id_reimburstment_struck_file : VARCHAR
+        -- 
+        * id_reimburstment : VARCHAR
+        * struck_reimburstment : VARCHAR
     }
 
     ' entity StatusApprovReimburstment {
@@ -267,8 +288,7 @@
     
 
 
-User ||--|| Employe :  Employee Account
-User ||--|| Role : user role
+User ||--o| Employe :  Employee Account
 Employe ||--|| EmployeSecondaryData : Employee secondary data
 Employe ||--|| EmployeeFile : EmployeeFile
 Position ||--o{ EmployeePosition : Employe Position
@@ -283,7 +303,7 @@ EmployeePosition ||--|| AbsenConfiguration : PIC configuration untuk absensi
 Absensi ||--|{ Approval : Absensi Approval
 Employe ||--o{ Notes : Employee create notes
 Absensi ||--o{ Notes : notes absensi
-Employe ||--|| CurrentLeave : Sisa jatah cuti employee
+Employe ||--|| CurrentCuti : Sisa jatah cuti employee
 Employe ||--o{ Cuti : Employee mengajukan Cuti
 Cuti ||--o{ Absensi : absensi cuti
 EmployeePosition ||--|| TimesheetConfiguration : Timeshete PIC and configuration
@@ -295,12 +315,16 @@ TimesheetDetail ||--o{ Notes : Notes for timesheet detail
 EmployeePosition ||--|| CutiConfiguration : PIC cuti
 Employe ||--|{ Timesheet : Employee Timesheet
 CutiType ||--|{ Cuti : Cuti Type
-Project |o--|{ Cuti : Project yang dihandle saat cuti
 Cuti ||--|{ Approval : Approval Cuti
 Cuti ||--o{ Notes : Notes For Cuti
+Cuti ||--o| CutiWhenOnProject : employee cuti when employee on project
+Project ||--|{ CutiWhenOnProject : Project yang dihandle saat cuti
 EmployeePosition ||--|| ReimburstmentConfiguration : PIC for reimburstment
 ReimburstmentType ||--|{ Reimburstment : pilih type reimburstmen
+Reimburstment ||--o| ReimburstmentTypeTransfert : data reimburstment for reimburstment type transfer
 Reimburstment ||--o{ Notes : Notes for Reimburstment
+Reimburstment ||-|{ Approval : Approval for reimburstment
+Reimburstment ||--|{ ReimburstmentStruckFile : struck reimburstment
 
 ' Employe ||--|{ Timesheet : Employee Timesheet
 ' ActivityTimesheet ||--|{ TimesheetDetail : Timesheet Activity
