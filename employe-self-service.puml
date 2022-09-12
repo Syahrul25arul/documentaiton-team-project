@@ -193,26 +193,28 @@
         --
         * cuti_type_name : VARCHAR
         * potongan_cuti : FLOAT
+        * durasi_waktu_cuti : HOUR
         * ditujukan : ENUM
     }
     entity Cuti {
         * id_cuti : VARCHAR
         --
         * id_employee : VARCHAR
-        tanggal_penerbitan_form : DATE
-        dari_tanggal : DATE
-        keterangan_cuty : TEXT
+        * id_cuti_type : VARCHAR
+        * tanggal_penerbitan_form : DATE
+        * tanggal_mulai_cuti : DATE
+        tanggal_selesai_cuti : DATE
+        * keterangan_cuty : TEXT
         no_tlp : VARCHAR
-        alamat_selama_cuty : VARCHAR
-        jenis_cuty : enum
-        total_hari : INT
-        * sedang_di_project : enum
-        tugas_yang_diserahkan : VARCHAR
+         alamat_selama_cuty : VARCHAR
+        * total_hari : INT
+         sedang_di_project : enum
+        id_project : VARCHAR
         pegawai_pengganti : VARCHAR
+        file_approval_client :  VARCHAR
         catatan : TEXT
         issu_by : TEXT
-        leave_type : enum
-        status_approval : enum
+        status_cuti : VARCHAR
     }
 
     ' entity Reimburstment {
@@ -279,6 +281,9 @@ Timesheet ||--o{ Notes : Notes for timesheet
 TimesheetDetail ||--o{ Notes : Notes for timesheet detail
 EmployeePosition ||--|| CutiConfiguration : PIC cuti
 Employe ||--|{ Timesheet : Employee Timesheet
+CutiType ||--|{ Cuti : Cuti Type
+Project |o--|{ Cuti : Project yang dihandle saat cuti
+Cuti ||--|{ Approval : Approval Cuti
 ' Employe ||--|{ Timesheet : Employee Timesheet
 ' ActivityTimesheet ||--|{ TimesheetDetail : Timesheet Activity
 ' Project ||--|{ TimesheetDetail : Project in timesheet
