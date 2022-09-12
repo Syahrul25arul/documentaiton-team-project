@@ -217,23 +217,36 @@
         status_cuti : VARCHAR
     }
 
-    ' entity Reimburstment {
-    '     * id_reimburstment : VARCHAR
-    '     --
-    '     * id_employee : VARCHAR
-    '     * no_vourcher : VARCHAR
-    '     * remburstment_payment_type : enunm
-    '     Bank : VARCHAR
-    '     name_bank : VARCHAR
-    '     account_no : VARCHAR
-    '     bank_branch : VARCHAR
-    '     struck_reimburstment : VARCHAR
-    '      * transaction_date : DATE
-    '     * account_code : VARCHAR
-    '     * description : TEXT
-    '     * total_amount : INT
-    '     notes : TEXT
-    ' }
+    entity ReimburstmentConfiguration {
+        PIC_pertama : VARCHAR
+        * PIC_kedua : VARCHAR
+    }
+
+    entity ReimburstmentType {
+        * id_reimburstment_type 
+        --
+        * reimbursment_type_name : VARCHAR
+    }
+
+    entity Reimburstment {
+        * id_reimburstment : VARCHAR
+        --
+        * id_employee : VARCHAR
+        * id_reimburstment_type : VARCHAR
+        * no_vourcher : VARCHAR
+        * remburstment_payment_type : enunm
+        Bank : VARCHAR
+        name_bank : VARCHAR
+        account_no : VARCHAR
+        bank_branch : VARCHAR
+        struck_reimburstment : VARCHAR
+         * transaction_date : DATE
+        * account_code : VARCHAR
+        * description : TEXT
+        * total_amount : INT
+        notes : TEXT
+        status_reimburstment : VARCHAR
+    }
 
     ' entity StatusApprovReimburstment {
     '     * id_status_reimburstment : VARCHAR
@@ -284,6 +297,11 @@ Employe ||--|{ Timesheet : Employee Timesheet
 CutiType ||--|{ Cuti : Cuti Type
 Project |o--|{ Cuti : Project yang dihandle saat cuti
 Cuti ||--|{ Approval : Approval Cuti
+Cuti ||--o{ Notes : Notes For Cuti
+EmployeePosition ||--|| ReimburstmentConfiguration : PIC for reimburstment
+ReimburstmentType ||--|{ Reimburstment : pilih type reimburstmen
+Reimburstment ||--o{ Notes : Notes for Reimburstment
+
 ' Employe ||--|{ Timesheet : Employee Timesheet
 ' ActivityTimesheet ||--|{ TimesheetDetail : Timesheet Activity
 ' Project ||--|{ TimesheetDetail : Project in timesheet
