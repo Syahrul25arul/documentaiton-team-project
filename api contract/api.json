@@ -3,9 +3,146 @@
     "info": {
         "title": "Employe Self Service",
         "version": "1",
-        "description": "OpenAPI for Employe Selft Service"
+        "description": "This is an API documentation ESS Celerates 2022 based on the OpenAPI 3.0.3 specification.  You can find out more about Swagger at [https://swagger.io](https://swagger.io). In the third iteration of the pet store, we've switched to the design first approach! You can now help us improve the API whether it's by making changes to the definition itself or to the code. That way, with time, we can improve the API in general, and expose some of the new features in OAS3.",
+        "termsOfService": "https://www.celerates.com/",
+        "contact": {
+            "name": "Celerates",
+            "email": "contact@celerates.com",
+            "url": "https://www.celerates.com/"
+        }
     },
     "paths": {
+        "/register": {
+            "get": {
+                "security": [
+                    {}
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Get Page Register",
+                "description": "Get Page Register for Employee",
+                "responses": {
+                    "200": {
+                        "description": "Success Render Page Register",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "success": {
+                                        "description": "Success render page register",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Create New Account Employee",
+                "description": "Create new Account Employee to database. this end point containt two component : Register Component and Primary Data Component",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Register"
+                            },
+                            "examples": {
+                                "register_user": {
+                                    "description": "Example Register Account Employee",
+                                    "value": {
+                                        "nama_lengkap": "Kresna",
+                                        "email": "kresna@celerates.com",
+                                        "password": "kresnaCelerates911",
+                                        "tempat_lahir": "Bandung",
+                                        "tanggal_lahir": "17-08-1945",
+                                        "nik": "978234235",
+                                        "alamat_ktp": "Bandung Raya, Jl. Ujang Kasep, RT.01/RW.01",
+                                        "pendidikan_terakhir": "Sarjana",
+                                        "nama_pendidikan_terakhir": "Universitas Pasuruan",
+                                        "jurusan_pendidikan_terakhir": "Oceano Gravy",
+                                        "alamat_email_aktif": "DrK@gmail.com",
+                                        "no_tlp_aktif": "08001001001",
+                                        "kontak_darurat": "080010010911",
+                                        "status_employee": "aktif",
+                                        "photo_employee": "https://ess.com/images/assert/akdfg08923145asdf.jpg"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success Create Account Employee",
+                        "content": {
+                            "applicaton/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseRegister"
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "Success Create Account Employee",
+                                        "value": {
+                                            "code": 201,
+                                            "status": "ok",
+                                            "message": "Your Account have been created"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Failed Create Account Employee",
+                        "content": {
+                            "applicaton/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseRegister"
+                                },
+                                "examples": {
+                                    "failed_401": {
+                                        "description": "Failed Create Account Employee",
+                                        "value": {
+                                            "code": 401,
+                                            "status": "error",
+                                            "message": "Your Account failed to create"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed Create Account Employee",
+                        "content": {
+                            "applicaton/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseRegister"
+                                },
+                                "examples": {
+                                    "failed_500": {
+                                        "description": "Failed Create Account Employee Because Internal Server Error",
+                                        "value": {
+                                            "code": 501,
+                                            "status": "error",
+                                            "message": "Sorry, Internal Server Error"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/login": {
             "get": {
                 "tags": [
@@ -37,7 +174,7 @@
             "post": {
                 "security": [
                     {
-                        "jwtAuth": []
+                        "EssAuth": []
                     }
                 ],
                 "tags": [
@@ -93,79 +230,11 @@
                 }
             }
         },
-        "/register": {
-            "get": {
-                "security": [
-                    {
-                        "jwtAuth": []
-                    }
-                ],
-                "tags": [
-                    "Products"
-                ],
-                "summary": "Get pagination products",
-                "description": "Get all products with pagination",
-                "parameters": [
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "required": true,
-                        "description": "pagination product per page",
-                        "schema": {
-                            "type": "string",
-                            "nullable": true,
-                            "minLength": 1
-                        },
-                        "examples": {
-                            "page": {
-                                "value": "1",
-                                "description": "Example page pagination"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success get products pagiantion",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/arrayGetProducts"
-                                },
-                                "examples": {
-                                    "success": {
-                                        "description": "Example success get all products pagination",
-                                        "value": [
-                                            {
-                                                "product_id": "1",
-                                                "name": "mie goreng",
-                                                "category": "makanan",
-                                                "price": 2000,
-                                                "stock": 30,
-                                                "description_product": "ini contoh deskripsi produk"
-                                            },
-                                            {
-                                                "product_id": "2",
-                                                "name": "teh pucuk",
-                                                "category": "minuman",
-                                                "price": 4500,
-                                                "stock": 15,
-                                                "description_product": "ini contoh deskripsi produk"
-                                            }
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/products/{productId}": {
             "get": {
                 "security": [
                     {
-                        "jwtAuth": []
+                        "EssAuth": []
                     }
                 ],
                 "tags": [
@@ -236,7 +305,7 @@
             "delete": {
                 "security": [
                     {
-                        "jwtAuth": []
+                        "EssAuth": []
                     }
                 ],
                 "tags": [
@@ -303,7 +372,7 @@
             "put": {
                 "security": [
                     {
-                        "jwtAuth": []
+                        "EssAuth": []
                     }
                 ],
                 "tags": [
@@ -365,11 +434,11 @@
     },
     "components": {
         "securitySchemes": {
-            "jwtAuth": {
+            "EssAuth": {
                 "type": "apiKey",
                 "in": "header",
                 "name": "Authorization",
-                "description": "Authentication for Mini Project"
+                "description": "Authentication for ESS Project App"
             }
         },
         "parameters": {
@@ -392,6 +461,151 @@
             }
         },
         "schemas": {
+            "Register": {
+                "type": "object",
+                "properties": {
+                    "nama_lengkap": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "nama karyawan",
+                        "example": "Kresna"
+                    },
+                    "email": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "email karyawan",
+                        "example": "kresna@celerates.com",
+                        "pattern": "@celerates.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Password for account",
+                        "example": "kresnaCelerates911"
+                    },
+                    "tempat_lahir": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Kota Tempat Lahir",
+                        "example": "Bandung"
+                    },
+                    "tanggal_lahir": {
+                        "type": "string",
+                        "format": "date",
+                        "required": [
+                            "true"
+                        ],
+                        "pattern": "dd-mm-yyyy",
+                        "description": "tanggal lahir karyawan",
+                        "example": "17-08-1945"
+                    },
+                    "nik": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "NIK karyawan",
+                        "example": "978234235",
+                        "minLength": 16,
+                        "maxLength": 16
+                    },
+                    "alamat_ktp": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "format": "TEXT",
+                        "description": "alamat ktp karyawan",
+                        "example": "Bandung Raya, Jl. Ujang Kasep, RT.01/RW.01"
+                    },
+                    "pendidikan_terakhir": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Pendidikan Terakhir Karyawan",
+                        "example": "Sarjana"
+                    },
+                    "nama_pendidikan_terakhir": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Nama Tempat Pendidikan Terakhir Karyawan",
+                        "example": "Universitas Pasuruan"
+                    },
+                    "jurusan_pendidikan_terakhir": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Jurusan Pendidikan",
+                        "example": "Oceano Gravy"
+                    },
+                    "alamat_email_aktif": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Alamat Email Karyawan Non Celerates Aktif",
+                        "example": "DrK@gmail.com"
+                    },
+                    "no_tlp_aktif": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "No Telepon Aktif Karyawan",
+                        "example": "08001001001"
+                    },
+                    "kontak_darurat": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Kontak Darurat Yang Bisa Dihubungi",
+                        "example": "080010010911"
+                    },
+                    "status_employee": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Status bekerja karyawan",
+                        "example": "aktif"
+                    },
+                    "photo_employee": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "alamat url photo karyawan",
+                        "example": "https://ess.com/images/assert/akdfg08923145asdf.jpg"
+                    }
+                }
+            },
+            "ResponseRegister": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
             "Products": {
                 "type": "object",
                 "properties": {

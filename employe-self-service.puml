@@ -8,7 +8,6 @@
     entity User {
         * id_user : VARCHAR
         --
-        * username : VARCHAR
         * email : VARCHAR
         * password : VARCHAR
         * status : enum
@@ -27,7 +26,7 @@
         --
         * id_user : VARCHAR
         * NIK : INT
-        * nama : VARCHAR
+        * nama_lengkap : VARCHAR
         * tempat_lahir : VARCHAR
         * tanggal_lahir : DATE
         * alamat_ktp : VARCHAR
