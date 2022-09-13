@@ -1,0 +1,6 @@
+Role Admin
+- konfgurasi,
+- posisi karyawan
+- informasi perusahaan
+- daftar email yang bisa dipake untuk celerates
+- isi data client sama project
