@@ -166,10 +166,8 @@
         * id_timesheet : VARCHAR
         --
         * id_employee : VARCHAR
-        * id_employee_position : VARCHAR
-        * id_activity : VARCHAR
-        * id_project : VARCHAR
-        * crated_at : DATE
+        * created_at : Time
+        * updated_at : Time
         updated_at : Date
         * is_holiday : enum
     }
@@ -182,15 +180,12 @@
         * id_detail_timesheet : VARCHAR
         --
         * id_timesheet : VARCHAR
-        * created_at : Time
-        * updated_at : Time
+        * id_project : VARCHAR
+        * id_activity : VARCHAR
+        
         * start_at : HOUR
         * finish_at : HOUR
         * work_description : VARCHAR
-        * break_hours : TIME
-        * total_hours : float
-        * over_time_hours : float
-        * regular_hours : float
     }
     entity CutiConfiguration {
         * status_reset_cuti : enum
