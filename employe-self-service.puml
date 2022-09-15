@@ -36,6 +36,7 @@
         * alamat_email_aktif : VARCHAR
         * no_tlp_aktif : VARCHAR
         * kontak_darurat : VARCHAR
+        * no_tlp_kontak_darurat : VARCHAR
         * status_employee : enum 
         * photo_employee : VARCHAR
     }
@@ -125,9 +126,10 @@
         --
         * id_employee : VARCHAR
         id_cuti : VARCHAR
-        * tanggal_absen
-        * absen_pagi : TIME
-        * absen_pulang : TIME
+        * tanggal_absen : DATE
+        * masuk : TIME
+        * pulang : TIME
+        * lokasi_absen : enum
         terlambat_kerja : INT
         bobot : float
         over_time : INT
@@ -153,6 +155,7 @@
         * feature_id : VARCHAR
         * Notes : TEXT
         feature_type : VARCHAR
+        tujuan_notes : VARCHAR
         created_at : timestamps
     }
     entity TimesheetConfiguration {
@@ -181,6 +184,8 @@
         * id_timesheet : VARCHAR
         * created_at : Time
         * updated_at : Time
+        * start_at : HOUR
+        * finish_at : HOUR
         * work_description : VARCHAR
         * break_hours : TIME
         * total_hours : float
@@ -320,6 +325,7 @@ Cuti ||--o| CutiWhenOnProject : employee cuti when employee on project
 Project ||--|{ CutiWhenOnProject : Project yang dihandle saat cuti
 EmployeePosition ||--|| ReimburstmentConfiguration : PIC for reimburstment
 ReimburstmentType ||--|{ Reimburstment : pilih type reimburstmen
+Employe ||--o{ Reimburstment : Employee mengajukan reimbursement
 Reimburstment ||--o| ReimburstmentTypeTransfert : data reimburstment for reimburstment type transfer
 Reimburstment ||--o{ Notes : Notes for Reimburstment
 Reimburstment ||-|{ Approval : Approval for reimburstment
