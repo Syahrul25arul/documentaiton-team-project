@@ -1,15 +1,17 @@
+
+CREATE TYPE usersverfied AS ENUM ('true','false');
+CREATE TYPE roleusers AS ENUM ('admin' , 'employee');
 CREATE TABLE users(
    id_user VARCHAR(30) NOT NULL,
    email VARCHAR(150) NOT NULL,
    password VARCHAR(50) NOT NULL,
-   status_verified VARCHAR(30),
-   user_role VARCHAR(30),
+   status_verified usersverfied,
+   user_role roleusers,
    PRIMARY KEY(id_user)
 );
 
-
 CREATE TYPE statussaatini AS ENUM ('kawin', 'belum_kawin');
-CREATE TYPE statusbpjskes AS ENUM ('ada', 'tidak');
+CREATE TYPE statusbpjskesehatan AS ENUM ('ada', 'tidak');
 CREATE TYPE statusbpjsketenaga_kerjaan AS ENUM ('ada', 'tidak');
 CREATE TABLE employeesecondarydata(
    id_employe_secondary VARCHAR(30) NOT NULL,
@@ -21,11 +23,30 @@ CREATE TABLE employeesecondarydata(
    no_rek VARCHAR(35),
    nama_rek VARCHAR(40),
    no_bpjs_kesehatan VARCHAR(45),
-   status_bpjs_kesehatan statusbpjskes,
+   status_bpjs_kesehatan statusbpjskesehatan,
    status_bpjs_ketenagakerjaan statusbpjsketenaga_kerjaan,
+   created_at DATE,
+   updated_at DATE,
+   PRIMARY KEY(id_employe_secondary),
+   CONSTRAINT fk_employe
+      FOREIGN KEY(id_employe) 
+	  REFERENCES employee(id_employe)
+	  ON DELETE SET NULL
+);
+
+CREATE TABLE employeefile(
+   id_employe_file VARCHAR(30) NOT NULL,
+   id_employe VARCHAR(30) NOT NULL,
+   file_bpjs_kesehatan VARCHAR(150),
+   file_bpjs_ketenagakerjaan VARCHAR(150),
+   file_npwp VARCHAR(150),
+   file_kartu_keluarga VARCHAR(150),
+   file_ijazah VARCHAR(150),
+   file_sertifikat_keahlian VARCHAR(150),
+   file_ktp VARCHAR(150),
    created_at TIMESTAMP,
    updated_at TIMESTAMP,
-   PRIMARY KEY(id_employe_secondary),
+   PRIMARY KEY(id_employe_file),
    CONSTRAINT fk_employe
       FOREIGN KEY(id_employe) 
 	  REFERENCES employee(id_employe)
@@ -78,7 +99,7 @@ CREATE TABLE currentcuti(
 	  ON DELETE SET NULL
 );
 
-CREATE TYPE di_tujukan AS ENUM ('cuti_individu', 'cuti_bersama');
+CREATE TYPE di_tujukan AS ENUM ('cuti individu', 'cuti bersama');
 CREATE TABLE cutitype(
    id_cuti_type VARCHAR(30) NOT NULL,
    cuti_type_name VARCHAR(150) NOT NULL,
@@ -319,6 +340,26 @@ CREATE TABLE timesheet_configuration(
 	  ON DELETE SET NULL
 );
 
+--cuti_configuration tinggal enum untuk status_reset_cuti (BELUM)
+-- CREATE TABLE cuti_configuration(
+--    id_employee_position VARCHAR(30) NOT NULL,
+--    status_reset_cuti INT,
+--    bulan_reset_cuti INT,
+--    factor_reset_cuti FLOAT8,
+--    maksimal_cuti_perbulan INT,
+--    pic_cuti VARCHAR(150)
+--    CONSTRAINT fk_employee_position
+--       FOREIGN KEY(id_employee_position) 
+-- 	  REFERENCES employee_position(id_employee_position)
+-- 	  ON DELETE SET NULL
+-- );
+
+--APPROVAL BELUM
+
+--NOTES BELUM
+
+
+CREATE TYPE employestatus AS ENUM ('aktif', 'nonaktif');
 CREATE TABLE employee(
    id_employe VARCHAR(30) NOT NULL,
    id_user VARCHAR(30) NOT NULL,
@@ -334,7 +375,7 @@ CREATE TABLE employee(
    no_tlp_aktif VARCHAR(30),
    kontak_darurat VARCHAR(70),
    no_tlp_kontak_darurat VARCHAR(30),
-   status_employee VARCHAR(30),
+   status_employee employestatus,
    photo_employee VARCHAR(150),
    PRIMARY KEY(id_employe),
    CONSTRAINT fk_users
@@ -342,3 +383,4 @@ CREATE TABLE employee(
 	  REFERENCES users(id_user)
 	  ON DELETE SET NULL
 );
+
