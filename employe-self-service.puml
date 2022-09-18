@@ -10,7 +10,7 @@
         --
         * email : VARCHAR
         * password : VARCHAR
-        * status : enum
+        * verify_email : enum
         * user_role : enum
     }
     entity OurCompany {
@@ -44,15 +44,17 @@
         * id_employe_secondary : VARCHAR
         --
         * id_employee
+        status_npwp : enum
         no_npwp : VARCHAR
         no_kartu_keluarga : VARCHAR
-        status_saat_ini : enum
+        status_kawin : enum
         tanggungan : INT
         no_rek : VARCHAR
         nama_rek : VARCHAR
         no_bpjs_kesehatan : VARCHAR
         status_bpjs_kesehatan : enum
         status_bpjs_ketenaga_kerjaan : enum
+        no_bpjs_ketenagakerjaan : VARCHAR
         created_at : DATE
         updated_at : DATE
     }

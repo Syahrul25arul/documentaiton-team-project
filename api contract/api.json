@@ -158,12 +158,600 @@
                                 "examples": {
                                     "success": {
                                         "description": "Success Render Page Login",
-                                        "value": [
-                                            {
-                                                "status": "ok",
-                                                "code": "200"
-                                            }
-                                        ]
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User Login",
+                "description": "User Login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Login"
+                            },
+                            "examples": {
+                                "success_login": {
+                                    "description": "Example Request Body for Success Login",
+                                    "value": {
+                                        "email": "kresna@celerates.com",
+                                        "password": "kresnaCelerates911"
+                                    }
+                                },
+                                "failed_login_invalid_credential": {
+                                    "description": "Example Request Body for login failed invalid credential",
+                                    "value": {
+                                        "email": "kresna@celerates.com",
+                                        "password": "passwordWrong"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponeLoginSuccess"
+                                },
+                                "examples": {
+                                    "success_login": {
+                                        "description": "Example response body for success login",
+                                        "value": {
+                                            "code": 200,
+                                            "status": "ok",
+                                            "message": "Your Login Success!",
+                                            "token": "sdkughakjsfkajsd02837594563kjasgdhasgh"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "failed login for invalid credential",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponeLoginFailed"
+                                },
+                                "examples": {
+                                    "failed_login_invalid_credential": {
+                                        "description": "Example response body for failed login because invalid credential",
+                                        "value": {
+                                            "code": 401,
+                                            "status": "error",
+                                            "message": "Your Login Failed! Invalid Credential"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "failed login for internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponeLoginFailed"
+                                },
+                                "examples": {
+                                    "failed_login_internal_server_error": {
+                                        "description": "Example response body for failed login because internal server error",
+                                        "value": {
+                                            "code": 500,
+                                            "status": "error",
+                                            "message": "Sorry, an error has occurred on our system due to an internal server error. please try again!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/dashboard/{employeeId}": {
+            "get": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "View Dashboard",
+                "description": "Render Page Dashboard",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/employeeId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Render",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "success_after_absen": {
+                                        "description": "Success Render Page Login",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200",
+                                            "timesheet": {
+                                                "created": 8,
+                                                "denied": 1,
+                                                "review": 1,
+                                                "approve": 6
+                                            },
+                                            "cuti": {
+                                                "created": 8,
+                                                "denied": 1,
+                                                "review": 1,
+                                                "approve": 6
+                                            },
+                                            "reimbursement": {
+                                                "created": 8,
+                                                "denied": 1,
+                                                "review": 1,
+                                                "approve": 6
+                                            },
+                                            "kehadiran": {
+                                                "created": 8,
+                                                "denied": 1,
+                                                "review": 1,
+                                                "approve": 6
+                                            },
+                                            "PIC": {
+                                                "pic_absensi": true,
+                                                "pic_cuti": true,
+                                                "pic_reimburstment": true,
+                                                "pic_timesheet": true
+                                            },
+                                            "data_sekunder_karyawan": false,
+                                            "approval": 5
+                                        }
+                                    },
+                                    "success_before_absen": {
+                                        "description": "Success Render Page Login",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200",
+                                            "timesheet": {
+                                                "created": 8,
+                                                "denied": 1,
+                                                "review": 1,
+                                                "approve": 6
+                                            },
+                                            "cuti": {
+                                                "created": 8,
+                                                "denied": 1,
+                                                "review": 1,
+                                                "approve": 6
+                                            },
+                                            "reimbursement": {
+                                                "created": 8,
+                                                "denied": 1,
+                                                "review": 1,
+                                                "approve": 6
+                                            },
+                                            "data_sekunder_karyawan": false,
+                                            "kehadiran": null,
+                                            "PIC": null,
+                                            "approval": 5
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/absen/{employeeId}": {
+            "get": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "Absen"
+                ],
+                "summary": "View Absen",
+                "description": "Render Page Dashboard",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/employeeId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Render",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "belum_absen_masuk_karyawan": {
+                                        "description": "Example value before absen",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200",
+                                            "status_absen_hari_ini": false,
+                                            "tanngal_filter_absen": "01/09/2022 - 12/09/2022",
+                                            "absens": [
+                                                {
+                                                    "id_absen": "ab-1",
+                                                    "tanggal_absen": "12 Septembet 2022",
+                                                    "masuk": "10:20",
+                                                    "pulang": "17:20",
+                                                    "lokasi": "Kantor Celerates",
+                                                    "proyek": [
+                                                        "Pama Kalimantan Constructor",
+                                                        "Blue Bird Group"
+                                                    ],
+                                                    "approval": null,
+                                                    "notes": null
+                                                },
+                                                {
+                                                    "id_absen": "ab-2",
+                                                    "tanggal_absen": "11 Septembet 2022",
+                                                    "masuk": "10:30",
+                                                    "pulang": "14:30",
+                                                    "lokasi": "Kantor Celerates",
+                                                    "proyek": [
+                                                        "Pama Kalimantan Constructor",
+                                                        "Blue Bird Group"
+                                                    ],
+                                                    "approval": [
+                                                        {
+                                                            "pic_approval": "HR",
+                                                            "status_approval": "ditolak",
+                                                            "tujuan_approval": "absen masuk",
+                                                            "created_at": "2022-09-11 12:50:01",
+                                                            "feature_type": "absen",
+                                                            "id_absen": "ab-2"
+                                                        },
+                                                        {
+                                                            "pic_approval": "HR",
+                                                            "status_approval": "ditolak",
+                                                            "tujuan_approval": "absen pulang",
+                                                            "created_at": "2022-09-12 10:20:01",
+                                                            "feature_type": "absen",
+                                                            "id_absen": "ab-2"
+                                                        }
+                                                    ],
+                                                    "notes": [
+                                                        {
+                                                            "id_absen": "ab-2",
+                                                            "feature_type": "absen",
+                                                            "tujuan_notes": "absen masuk",
+                                                            "notes_text": "maaf. saya datang telat hari ini karna ban saya bocor ditengah jalan.",
+                                                            "created_at": "2022-09-12 10:20:00",
+                                                            "nama_karyawan": "Teddy",
+                                                            "posisi": "Talent SAD"
+                                                        },
+                                                        {
+                                                            "id_absen": "ab-1",
+                                                            "feature_type": "absen",
+                                                            "tujuan_notes": "absen masuk",
+                                                            "notes_text": "dari kemarin alasannya itu itu aja...",
+                                                            "created_at": "2022-09-08 12:30:00",
+                                                            "nama_karyawan": "Yoga",
+                                                            "posisi": "HRD"
+                                                        },
+                                                        {
+                                                            "id_absen": "ab-2",
+                                                            "feature_type": "absen",
+                                                            "tujuan_notes": "absen pulang",
+                                                            "notes_text": "maaf mas. saya pulang duluan, soalnya saya lagi gak enak badan.",
+                                                            "created_at": "2022-09-12 15:20:00",
+                                                            "nama_karyawan": "Teddy",
+                                                            "posisi": "Talent SAD"
+                                                        },
+                                                        {
+                                                            "id_absen": "ab-2",
+                                                            "feature_type": "absen",
+                                                            "tujuan_notes": "absen tealt",
+                                                            "notes_text": "ada aja alasannya...",
+                                                            "created_at": "2022-09-12 18:30:00",
+                                                            "nama_karyawan": "Yoga",
+                                                            "posisi": "HRD"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "sudah_absen_masuk_karyawan": {
+                                        "description": "Success Render Page Login",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200",
+                                            "status_absen_hari_ini": true,
+                                            "tanngal_filter_absen": "01/09/2022 - 12/09/2022",
+                                            "absens": [
+                                                {
+                                                    "id_absen": "ab-1",
+                                                    "tanggal_absen": "12 Septembet 2022",
+                                                    "masuk": "10:20",
+                                                    "pulang": "17:20",
+                                                    "lokasi": "Kantor Celerates",
+                                                    "proyek": [
+                                                        "Pama Kalimantan Constructor",
+                                                        "Blue Bird Group"
+                                                    ],
+                                                    "approval": [
+                                                        {
+                                                            "pic_approval": "HR",
+                                                            "status_approval": "ditolak",
+                                                            "tujuan_approval": "absen masuk",
+                                                            "created_at": "2022-09-08 12:50:01",
+                                                            "feature_type": "absen",
+                                                            "id_absen": "ab-1"
+                                                        }
+                                                    ],
+                                                    "notes": [
+                                                        {
+                                                            "id_absen": "ab-1",
+                                                            "feature_type": "absen",
+                                                            "tujuan_notes": "absen masuk",
+                                                            "notes_text": "saya datang telat waktu hari ini. saya sangat sedih menjadi pegawai yang tidak disiplin dan berdedikasi pada diri saya sendiri.",
+                                                            "created_at": "2022-09-08 10:20:00",
+                                                            "nama_karyawan": "Teddy",
+                                                            "posisi": "Talent SAD"
+                                                        },
+                                                        {
+                                                            "id_absen": "ab-1",
+                                                            "feature_type": "absen",
+                                                            "tujuan_notes": "absen masuk",
+                                                            "notes_text": "alasa mulu...",
+                                                            "created_at": "2022-09-08 12:30:00",
+                                                            "nama_karyawan": "Yoga",
+                                                            "posisi": "HRD"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id_absen": "ab-2",
+                                                    "tanggal_absen": "11 Septembet 2022",
+                                                    "masuk": "10:30",
+                                                    "pulang": "14:30",
+                                                    "lokasi": "Kantor Celerates",
+                                                    "proyek": [
+                                                        "Pama Kalimantan Constructor",
+                                                        "Blue Bird Group"
+                                                    ],
+                                                    "approval": [
+                                                        {
+                                                            "pic_approval": "HR",
+                                                            "status_approval": "ditolak",
+                                                            "tujuan_approval": "absen masuk",
+                                                            "created_at": "2022-09-11 12:50:01",
+                                                            "feature_type": "absen",
+                                                            "id_absen": "ab-2"
+                                                        },
+                                                        {
+                                                            "pic_approval": "HR",
+                                                            "status_approval": "ditolak",
+                                                            "tujuan_approval": "absen pulang",
+                                                            "created_at": "2022-09-12 10:20:01",
+                                                            "feature_type": "absen",
+                                                            "id_absen": "ab-2"
+                                                        }
+                                                    ],
+                                                    "notes": [
+                                                        {
+                                                            "id_absen": "ab-2",
+                                                            "feature_type": "absen",
+                                                            "tujuan_notes": "absen masuk",
+                                                            "notes_text": "maaf. saya datang telat hari ini karna ban saya bocor ditengah jalan.",
+                                                            "created_at": "2022-09-12 10:20:00",
+                                                            "nama_karyawan": "Teddy",
+                                                            "posisi": "Talent SAD"
+                                                        },
+                                                        {
+                                                            "id_absen": "ab-1",
+                                                            "feature_type": "absen",
+                                                            "tujuan_notes": "absen masuk",
+                                                            "notes_text": "dari kemarin alasannya itu itu aja...",
+                                                            "created_at": "2022-09-08 12:30:00",
+                                                            "nama_karyawan": "Yoga",
+                                                            "posisi": "HRD"
+                                                        },
+                                                        {
+                                                            "id_absen": "ab-2",
+                                                            "feature_type": "absen",
+                                                            "tujuan_notes": "absen pulang",
+                                                            "notes_text": "maaf mas. saya pulang duluan, soalnya saya lagi gak enak badan.",
+                                                            "created_at": "2022-09-12 15:20:00",
+                                                            "nama_karyawan": "Teddy",
+                                                            "posisi": "Talent SAD"
+                                                        },
+                                                        {
+                                                            "id_absen": "ab-2",
+                                                            "feature_type": "absen",
+                                                            "tujuan_notes": "absen tealt",
+                                                            "notes_text": "ada aja alasannya...",
+                                                            "created_at": "2022-09-12 18:30:00",
+                                                            "nama_karyawan": "Yoga",
+                                                            "posisi": "HRD"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "sudah_absen_pulang_karyawan": {
+                                        "description": "Success Render Page Login",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200",
+                                            "status_absen_hari_ini": true,
+                                            "tanngal_filter_absen": "01/09/2022 - 12/09/2022",
+                                            "absens": [
+                                                {
+                                                    "id_absen": "ab-1",
+                                                    "tanggal_absen": "12 Septembet 2022",
+                                                    "masuk": "10:20",
+                                                    "pulang": "17:20",
+                                                    "lokasi": "Kantor Celerates",
+                                                    "proyek": [
+                                                        "Pama Kalimantan Constructor",
+                                                        "Blue Bird Group"
+                                                    ],
+                                                    "approval": [
+                                                        {
+                                                            "pic_approval": "HR",
+                                                            "status_approval": "ditolak",
+                                                            "tujuan_approval": "absen masuk",
+                                                            "created_at": "2022-09-08 12:50:01",
+                                                            "feature_type": "absen",
+                                                            "id_absen": "ab-1"
+                                                        },
+                                                        {
+                                                            "pic_approval": "HR",
+                                                            "status_approval": "ditolak",
+                                                            "tujuan_approval": "absen pulang",
+                                                            "created_at": "2022-09-08 12:50:01",
+                                                            "feature_type": "absen",
+                                                            "id_absen": "ab-1"
+                                                        }
+                                                    ],
+                                                    "notes": [
+                                                        {
+                                                            "id_absen": "ab-1",
+                                                            "feature_type": "absen",
+                                                            "tujuan_notes": "absen masuk",
+                                                            "notes_text": "saya datang telat waktu hari ini. saya sangat sedih menjadi pegawai yang tidak disiplin dan berdedikasi pada diri saya sendiri.",
+                                                            "created_at": "2022-09-08 10:20:00",
+                                                            "nama_karyawan": "Teddy",
+                                                            "posisi": "Talent SAD"
+                                                        },
+                                                        {
+                                                            "id_absen": "ab-1",
+                                                            "feature_type": "absen",
+                                                            "tujuan_notes": "absen masuk",
+                                                            "notes_text": "alasa mulu...",
+                                                            "created_at": "2022-09-08 12:30:00",
+                                                            "nama_karyawan": "Yoga",
+                                                            "posisi": "HRD"
+                                                        },
+                                                        {
+                                                            "id_absen": "ab-1",
+                                                            "feature_type": "absen",
+                                                            "tujuan_notes": "absen pulang",
+                                                            "notes_text": "maaf saya pulang duluan karna ada urusan keluarga.",
+                                                            "created_at": "2022-09-08 10:20:00",
+                                                            "nama_karyawan": "Teddy",
+                                                            "posisi": "Talent SAD"
+                                                        },
+                                                        {
+                                                            "id_absen": "ab-1",
+                                                            "feature_type": "absen",
+                                                            "tujuan_notes": "absen pulang",
+                                                            "notes_text": "alasa mulu...",
+                                                            "created_at": "2022-09-08 12:30:00",
+                                                            "nama_karyawan": "Yoga",
+                                                            "posisi": "HRD"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id_absen": "ab-2",
+                                                    "tanggal_absen": "11 Septembet 2022",
+                                                    "masuk": "10:20",
+                                                    "pulang": "17:20",
+                                                    "lokasi": "Kantor Celerates",
+                                                    "proyek": [
+                                                        "Pama Kalimantan Constructor",
+                                                        "Blue Bird Group"
+                                                    ],
+                                                    "approval": [
+                                                        {
+                                                            "pic_approval": "HR",
+                                                            "status_approval": "ditolak",
+                                                            "tujuan_approval": "absen masuk",
+                                                            "created_at": "2022-09-08 12:50:01",
+                                                            "feature_type": "absen",
+                                                            "id_absen": "ab-2"
+                                                        }
+                                                    ],
+                                                    "notes": [
+                                                        {
+                                                            "id_absen": "ab-2",
+                                                            "feature_type": "absen",
+                                                            "tujuan_notes": "absen masuk",
+                                                            "notes_text": "saya datang telat waktu hari ini. saya sangat sedih menjadi pegawai yang tidak disiplin dan berdedikasi pada diri saya sendiri.",
+                                                            "created_at": "2022-09-08 10:20:00",
+                                                            "nama_karyawan": "Teddy",
+                                                            "posisi": "Talent SAD"
+                                                        },
+                                                        {
+                                                            "id_absen": "ab-2",
+                                                            "feature_type": "absen",
+                                                            "tujuan_notes": "absen masuk",
+                                                            "notes_text": "alasa mulu...",
+                                                            "created_at": "2022-09-08 12:30:00",
+                                                            "nama_karyawan": "Yoga",
+                                                            "posisi": "HRD"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/absen/{employeeId}/masuk": {
+            "get": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "Absen"
+                ],
+                "summary": "View form absen masuk",
+                "description": "Render Page absen masuk",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/employeeId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Render",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "success": {
+                                        "description": "Success Render Page Absen Masuk",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200"
+                                        }
                                     }
                                 }
                             }
@@ -178,26 +766,82 @@
                     }
                 ],
                 "tags": [
-                    "Products"
+                    "Absen"
                 ],
-                "summary": "Create new Products",
-                "description": "Create new product to database",
+                "summary": "Absen Masuk",
+                "description": "End point untuk absen masuk",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/employeeId"
+                    }
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/CreateOrUpdateProduct"
+                                "$ref": "#/components/schemas/AbsenMasuk"
                             },
                             "examples": {
-                                "Golang": {
-                                    "description": "Example create product Golang",
+                                "ontime_absen": {
+                                    "description": "Example value request body for ontime absen",
                                     "value": {
-                                        "name_product": "Mie Goreng",
-                                        "category": 3,
-                                        "price": 5000,
-                                        "stock": 12,
-                                        "description_product": "mie goreng indomie product"
+                                        "tanggal_absen": "12-09-2022",
+                                        "lokasi_absen": "kantor celerates",
+                                        "longtitude": "106.81152325",
+                                        "langtitude": "-6.286931999999999",
+                                        "times": "2022-09-12 08:00:00",
+                                        "address": "Jeruk Purut No.70, Jeruk Purut No.70, South Jakarta, Jakarta 12560, Indonesia",
+                                        "notes": null
+                                    }
+                                },
+                                "late_absen_with_notes": {
+                                    "description": "Example value request body for late absen",
+                                    "value": {
+                                        "tanggal_absen": "12-09-2022",
+                                        "lokasi_absen": "kantor celerates",
+                                        "longtitude": "106.81152325",
+                                        "langtitude": "-6.286931999999999",
+                                        "times": "2022-09-12 10:30:00",
+                                        "address": "Jeruk Purut No.70, Jeruk Purut No.70, South Jakarta, Jakarta 12560, Indonesia",
+                                        "notes": [
+                                            {
+                                                "feature_type": "absen",
+                                                "tujuan_notes": "absen masuk",
+                                                "notes_text": "maaf. saya datang telat hari ini karna ban saya bocor ditengah jalan.",
+                                                "created_at": "2022-09-12 10:20:00",
+                                                "id_employee": "kyw-1"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "late_absen_without_notes": {
+                                    "description": "Example value request body for late absen",
+                                    "value": {
+                                        "tanggal_absen": "12-09-2022",
+                                        "lokasi_absen": "kantor celerates",
+                                        "longtitude": "106.81152325",
+                                        "langtitude": "-6.286931999999999",
+                                        "times": "2022-09-12 10:30:00",
+                                        "address": "Jeruk Purut No.70, Jeruk Purut No.70, South Jakarta, Jakarta 12560, Indonesia",
+                                        "notes": null
+                                    }
+                                },
+                                "absen_wfh": {
+                                    "description": "Example value request body for absen wfh",
+                                    "value": {
+                                        "tanggal_absen": "12-09-2022",
+                                        "lokasi_absen": "wfh",
+                                        "times": "2022-09-12 09:00:00",
+                                        "notes": [
+                                            {
+                                                "feature_type": "absen",
+                                                "tujuan_notes": "absen masuk",
+                                                "notes_text": "hari ini saya bekerja wfh.",
+                                                "created_at": "2022-09-12 10:20:00",
+                                                "id_employee": "kyw-1"
+                                            }
+                                        ]
                                     }
                                 }
                             }
@@ -206,22 +850,51 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Success create product",
+                        "description": "Success entry absence",
                         "content": {
                             "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/arrayGetProducts"
-                                },
                                 "examples": {
-                                    "java": {
-                                        "description": "Success create product with golang",
-                                        "value": [
-                                            {
-                                                "code": "200",
-                                                "status": "ok",
-                                                "message": "success create product"
-                                            }
-                                        ]
+                                    "absen": {
+                                        "description": "Employee success for entry absence",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": 200,
+                                            "message": "anda telah absen, silahkan isi timesheet anda!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed entry absence bad request",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "absen_bad_request": {
+                                        "description": "Employee failed for entry absence because bad request",
+                                        "value": {
+                                            "status": "error",
+                                            "code": 400,
+                                            "message": "absen anda gagal, silahkan isi coba absen lagi!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed entry absence internal server error",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "absen_bad_request": {
+                                        "description": "Employee failed for entry absence because internal server error",
+                                        "value": {
+                                            "status": "error",
+                                            "code": 500,
+                                            "message": "maaf terjadi kesalahan sistem, silahkan coba isi absen lagi!"
+                                        }
                                     }
                                 }
                             }
@@ -230,7 +903,7 @@
                 }
             }
         },
-        "/products/{productId}": {
+        "/absen{employeeId}/pulang": {
             "get": {
                 "security": [
                     {
@@ -238,173 +911,49 @@
                     }
                 ],
                 "tags": [
-                    "Products"
+                    "Absen"
                 ],
-                "summary": "get product by id",
-                "description": "Get data product in database by id",
-                "responses": {
-                    "200": {
-                        "description": "Success get product",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean"
-                                        }
-                                    }
-                                },
-                                "examples": {
-                                    "success": {
-                                        "description": "Example success get products by id",
-                                        "value": {
-                                            "product_id": "1",
-                                            "name": "mie goreng",
-                                            "category": "makanan",
-                                            "price": 2000,
-                                            "stock": 30,
-                                            "description_product": "ini contoh deskripsi produk"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Failed get product not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean"
-                                        }
-                                    }
-                                },
-                                "examples": {
-                                    "failed": {
-                                        "description": "Failed get product by id",
-                                        "value": {
-                                            "success": false,
-                                            "message": "product not found"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
+                "summary": "View form absen pulang",
+                "description": "Render Page absen pulang",
                 "parameters": [
                     {
-                        "$ref": "#/components/parameters/productId"
+                        "$ref": "#/components/parameters/employeeId"
                     }
-                ]
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Render",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "success": {
+                                        "description": "Success Render Page Absen Pulang",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200",
+                                            "absen_id": "ab-1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             },
-            "delete": {
+            "post": {
                 "security": [
                     {
                         "EssAuth": []
                     }
                 ],
                 "tags": [
-                    "Products"
+                    "Absen"
                 ],
-                "summary": "Delete existing product",
-                "description": "Delete existing product in database",
-                "responses": {
-                    "200": {
-                        "description": "Success delete product",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean"
-                                        }
-                                    }
-                                },
-                                "examples": {
-                                    "success": {
-                                        "description": "Success delete product",
-                                        "value": {
-                                            "success": true,
-                                            "message": "success delete product"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Failed delete not found product",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean"
-                                        }
-                                    }
-                                },
-                                "examples": {
-                                    "failed": {
-                                        "description": "Failed delete product",
-                                        "value": {
-                                            "success": false,
-                                            "message": "delete product not found"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
+                "summary": "Absen Pulang",
+                "description": "End point untuk absen pulang",
                 "parameters": [
                     {
-                        "$ref": "#/components/parameters/productId"
-                    }
-                ]
-            },
-            "put": {
-                "security": [
-                    {
-                        "EssAuth": []
-                    }
-                ],
-                "tags": [
-                    "Products"
-                ],
-                "summary": "Update existing product",
-                "description": "Update existing product in databse",
-                "responses": {
-                    "200": {
-                        "description": "Success Update product",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/arrayGetProducts"
-                                },
-                                "examples": {
-                                    "Golang": {
-                                        "description": "Success update product with golang",
-                                        "value": {
-                                            "code": 200,
-                                            "status": "k",
-                                            "message": "success update product"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/productId"
+                        "$ref": "#/components/parameters/employeeId"
                     }
                 ],
                 "requestBody": {
@@ -412,17 +961,1647 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/CreateOrUpdateProduct"
+                                "$ref": "#/components/schemas/AbsenPulang"
                             },
                             "examples": {
-                                "Golang": {
-                                    "description": "Example update product with golang",
+                                "absen_pulang_with_notes": {
+                                    "description": "Example value request body for absen pulang",
                                     "value": {
-                                        "name": "mie goreng",
-                                        "category": "makanan",
-                                        "price": 2000,
-                                        "stock": 30,
-                                        "description_product": "ini contoh deskripsi produk"
+                                        "absen_id": "ab-1",
+                                        "times": "2022-09-12 20:00:00",
+                                        "status_overtime": true,
+                                        "notes": [
+                                            {
+                                                "feature_type": "absen",
+                                                "tujuan_notes": "absen masuk",
+                                                "notes_text": "saya terlambat pulang karna lembur kerja proyek PAMA",
+                                                "created_at": "2022-09-12 10:20:00",
+                                                "id_employee": "kyw-1"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "absen_pulang_without_notes": {
+                                    "description": "Example value request body for absen pulang",
+                                    "value": {
+                                        "absen_id": "ab-1",
+                                        "times": "2022-09-12 20:00:00",
+                                        "status_overtime": false,
+                                        "notes": null
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success absen pulang",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "absen": {
+                                        "description": "karyawan melakukan absen pulang",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": 200,
+                                            "message": "anda telah absen pulang, selamat beristirahat!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "gagal absen pulang bad request",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "absen_pulang_bad_request": {
+                                        "description": "gagal melakukan absen pulang karna bad request",
+                                        "value": {
+                                            "status": "error",
+                                            "code": 400,
+                                            "message": "absen pulang anda gagal, silahkan isi coba absen pulang lagi!",
+                                            "absen_id": "ab-1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "gagal pulang internal server error",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "absen_bad_request": {
+                                        "description": "gagal melakukan absence pulang karna internal server error",
+                                        "value": {
+                                            "status": "error",
+                                            "code": 500,
+                                            "message": "maaf terjadi kesalahan sistem, silahkan coba isi absen pulang lagi!",
+                                            "absen_id": "ab-1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/timesheet/{employeeId}": {
+            "get": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "Timesheet"
+                ],
+                "summary": "View form timesheet",
+                "description": "Render Page timesheet",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/employeeId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Render",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "belum_isi_timesheet": {
+                                        "description": "Success Render Page Timesheet",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200",
+                                            "sudah_isi_timesheet": false,
+                                            "tanggal_filter_timesheet": "01/09/2022 - 12/09/2022",
+                                            "timesheet": [
+                                                {
+                                                    "id_timesheet": "tis-1",
+                                                    "tanggal_timesheet": "09 September 2022",
+                                                    "detail_timesheet": [
+                                                        {
+                                                            "id_detail_timesheet": "dts-1",
+                                                            "start_at": "08:00",
+                                                            "finish_at": "12:00",
+                                                            "work_description": "Membuat laman auth PAMA Apps menggunakan ReactJS.",
+                                                            "proyek": "PAMA kalimantan group"
+                                                        },
+                                                        {
+                                                            "id_detail_timesheet": "dts-2",
+                                                            "start_at": "13:00",
+                                                            "finish_at": "17:00",
+                                                            "work_description": "Bug fixing blue bird pada transport App pada modul transport",
+                                                            "proyek": "Blue Bird group"
+                                                        }
+                                                    ],
+                                                    "approval": [
+                                                        {
+                                                            "pic_approval": "lead SAD",
+                                                            "status_approval": "diterima",
+                                                            "tujuan_approval": "persetujuan",
+                                                            "created_at": "2022-09-11 12:50:01",
+                                                            "feature_type": "timesheet",
+                                                            "id_timesheet": "tis-1"
+                                                        }
+                                                    ],
+                                                    "notes": [
+                                                        {
+                                                            "id_timesheet": "tis-1",
+                                                            "feature_type": "timesheet",
+                                                            "tujuan_notes": "timesheet",
+                                                            "notes_text": "Bagus!!",
+                                                            "created_at": "2022-09-12 10:20:00",
+                                                            "nama_karyawan": "purna satria",
+                                                            "posisi": "lead SAD"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "sudah_isi_timesheet": {
+                                        "description": "Success Render Page Timesheet",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200",
+                                            "sudah_isi_timesheet": true,
+                                            "tanggal_filter_timesheet": "01/09/2022 - 12/09/2022",
+                                            "timesheet": [
+                                                {
+                                                    "id_timesheet": "tis-1",
+                                                    "tanggal_timesheet": "09 September 2022",
+                                                    "detail_timesheet": [
+                                                        {
+                                                            "id_detail_timesheet": "dts-1",
+                                                            "start_at": "08:00",
+                                                            "finish_at": "12:00",
+                                                            "work_description": "Membuat laman auth PAMA Apps menggunakan ReactJS.",
+                                                            "proyek": "PAMA kalimantan group"
+                                                        },
+                                                        {
+                                                            "id_detail_timesheet": "dts-2",
+                                                            "start_at": "13:00",
+                                                            "finish_at": "17:00",
+                                                            "work_description": "Bug fixing blue bird pada transport App pada modul transport",
+                                                            "proyek": "Blue Bird group"
+                                                        }
+                                                    ],
+                                                    "approval": [
+                                                        {
+                                                            "pic_approval": "lead SAD",
+                                                            "status_approval": "ditolak",
+                                                            "tujuan_approval": "persetujuan",
+                                                            "created_at": "2022-09-11 12:50:01",
+                                                            "feature_type": "timesheet",
+                                                            "id_timesheet": "tis-1"
+                                                        }
+                                                    ],
+                                                    "notes": [
+                                                        {
+                                                            "id_timesheet": "tis-1",
+                                                            "feature_type": "timesheet",
+                                                            "tujuan_notes": "timesheet",
+                                                            "notes_text": "Kok sama kayak kemarin",
+                                                            "created_at": "2022-09-12 10:20:00",
+                                                            "nama_karyawan": "purna satria",
+                                                            "posisi": "lead SAD"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id_timesheet": "tis-2",
+                                                    "tanggal_timesheet": "09 September 2022",
+                                                    "detail_timesheet": [
+                                                        {
+                                                            "id_detail_timesheet": "dts-3",
+                                                            "start_at": "08:00",
+                                                            "finish_at": "12:00",
+                                                            "work_description": "Membuat laman auth PAMA Apps menggunakan ReactJS.",
+                                                            "proyek": "PAMA kalimantan group"
+                                                        },
+                                                        {
+                                                            "id_detail_timesheet": "dts-4",
+                                                            "start_at": "13:00",
+                                                            "finish_at": "17:00",
+                                                            "work_description": "Bug fixing blue bird pada transport App pada modul transport",
+                                                            "proyek": "Blue Bird group"
+                                                        }
+                                                    ],
+                                                    "approval": [
+                                                        {
+                                                            "pic_approval": "lead SAD",
+                                                            "status_approval": "diterima",
+                                                            "tujuan_approval": "persetujuan",
+                                                            "created_at": "2022-09-11 12:50:01",
+                                                            "feature_type": "timesheet",
+                                                            "id_timesheet": "tis-2"
+                                                        }
+                                                    ],
+                                                    "notes": [
+                                                        {
+                                                            "id_timesheet": "tis-2",
+                                                            "feature_type": "timesheet",
+                                                            "tujuan_notes": "timesheet",
+                                                            "notes_text": "Mantap!!",
+                                                            "created_at": "2022-09-12 10:20:00",
+                                                            "nama_karyawan": "purna satria",
+                                                            "posisi": "lead SAD"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "Timesheet"
+                ],
+                "summary": "Post Timesheet",
+                "description": "End point untuk isi data timesheet",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/employeeId"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AbsenPulang"
+                            },
+                            "examples": {
+                                "absen_pulang_with_notes": {
+                                    "description": "Example value request body for entry timesheet",
+                                    "value": {
+                                        "tanggal_timesheet": "2022-09-12",
+                                        "notes": [
+                                            {
+                                                "feature_type": "absen",
+                                                "tujuan_notes": "absen masuk",
+                                                "notes_text": "saya terlambat pulang karna lembur kerja proyek PAMA",
+                                                "created_at": "2022-09-12 10:20:00",
+                                                "id_employee": "kyw-1"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "absen_pulang_without_notes": {
+                                    "description": "Example value request body for absen pulang",
+                                    "value": {
+                                        "absen_id": "ab-1",
+                                        "times": "2022-09-12 20:00:00",
+                                        "status_overtime": false,
+                                        "notes": null
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success absen pulang",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "absen": {
+                                        "description": "karyawan melakukan absen pulang",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": 200,
+                                            "message": "anda telah absen pulang, selamat beristirahat!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "gagal absen pulang bad request",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "absen_pulang_bad_request": {
+                                        "description": "gagal melakukan absen pulang karna bad request",
+                                        "value": {
+                                            "status": "error",
+                                            "code": 400,
+                                            "message": "absen pulang anda gagal, silahkan isi coba absen pulang lagi!",
+                                            "absen_id": "ab-1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "gagal pulang internal server error",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "absen_bad_request": {
+                                        "description": "gagal melakukan absence pulang karna internal server error",
+                                        "value": {
+                                            "status": "error",
+                                            "code": 500,
+                                            "message": "maaf terjadi kesalahan sistem, silahkan coba isi absen pulang lagi!",
+                                            "absen_id": "ab-1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/timesheet/{employeeId}/form": {
+            "get": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "Timesheet"
+                ],
+                "summary": "View form timesheet",
+                "description": "Render Page form timesheet",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/employeeId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Render",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "success": {
+                                        "description": "Success Render Page form Timesheet",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200",
+                                            "proyek": [
+                                                {
+                                                    "id_projek": "p-1",
+                                                    "nama_projek": "Pama Kalimantan Construction"
+                                                },
+                                                {
+                                                    "id_projek": "p-2",
+                                                    "nama_projek": "Blue Bird App Group"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "Timesheet"
+                ],
+                "summary": "Post Timesheet",
+                "description": "End point untuk isi data timesheet",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/employeeId"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AbsenPulang"
+                            },
+                            "examples": {
+                                "success": {
+                                    "description": "Example value request body for entry timesheet",
+                                    "value": {
+                                        "tanggal_timesheet": "2022-09-12",
+                                        "id_employee": "kyw-1",
+                                        "detail_timesheet": [
+                                            {
+                                                "id_project": "p-1",
+                                                "start_at": "08:00",
+                                                "finish_at": "10:00",
+                                                "work_description": "membuat halaman auth PAMA App's menggunakan React JS. menambahkan validasi pada form"
+                                            },
+                                            {
+                                                "id_project": "p-2",
+                                                "start_at": "13:00",
+                                                "finish_at": "17:00",
+                                                "work_description": "TEXT"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success entry timesheet",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "timesheet_success": {
+                                        "description": "karyawan mengisi timesheet",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": 200,
+                                            "message": "berhasil mengisi timesheet!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "gagal mengisi timesheet bad request",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "timesheet_bad_request": {
+                                        "description": "gagal mengisi timesheet karna bad request",
+                                        "value": {
+                                            "status": "error",
+                                            "code": 400,
+                                            "message": "gagal mengisi timesheet, silahkan isi coba lagi!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "gagal isi timesheet internal server error",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "timesheet_internal_server_error": {
+                                        "description": "gagal mengisi timesheet karna internal server error",
+                                        "value": {
+                                            "status": "error",
+                                            "code": 500,
+                                            "message": "maaf terjadi kesalahan sistem, silahkan coba isi timesheet lagi!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/profile/{employeeId}/akun": {
+            "get": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "View Page Profile akun",
+                "description": "Render Page Akun",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/employeeId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Render",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "success": {
+                                        "description": "Success Render Page Akun",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200",
+                                            "nama_karyawan": "Mark Twain",
+                                            "email": "mark.twain@celerates.com"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/profile{employeeId}/data": {
+            "get": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "View Page Profile Data",
+                "description": "Render Page Data",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/employeeId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Render",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "data_primer_null": {
+                                        "description": "Success Render Page Data",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200",
+                                            "data_primer": {
+                                                "tempat_lahir": "Jakarta",
+                                                "tanggal_lahir": "17-08-1945",
+                                                "nik": "11112222333344444",
+                                                "alamat": "Jalan Mekar Arum no 5 RT 05 RW 05 Kelurahan Pasar Sabtu, Kecamatan Lapang Gede, Jakarta Tenggara",
+                                                "pendidikan_terakhir": "Sarjana",
+                                                "nama_pendidikan_terakhir": "Universitas Nusantara",
+                                                "jurusan_pendidikan_terakhir": "Teknik Mancing",
+                                                "alamat_email_aktif": "mark_twain@gmail.com",
+                                                "no_tlp_aktif": "081234567890",
+                                                "kontak_darurat": "Ayah",
+                                                "no_tlp_kontak_darurat": "081234567890",
+                                                "status_employee": "aktif",
+                                                "photo_employee": "https://ess-celerates.com/assets/1.jpg"
+                                            },
+                                            "data_secunder": null
+                                        }
+                                    },
+                                    "data_primer_not_null": {
+                                        "description": "Success Render Page Data",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200",
+                                            "data_primer": {
+                                                "tempat_lahir": "Jakarta",
+                                                "tanggal_lahir": "17-08-1945",
+                                                "nik": "11112222333344444",
+                                                "alamat": "Jalan Mekar Arum no 5 RT 05 RW 05 Kelurahan Pasar Sabtu, Kecamatan Lapang Gede, Jakarta Tenggara",
+                                                "pendidikan_terakhir": "Sarjana",
+                                                "nama_pendidikan_terakhir": "Universitas Nusantara",
+                                                "jurusan_pendidikan_terakhir": "Teknik Mancing",
+                                                "alamat_email_aktif": "mark_twain@gmail.com",
+                                                "no_tlp_aktif": "081234567890",
+                                                "kontak_darurat": "Ayah",
+                                                "no_tlp_kontak_darurat": "081234567890",
+                                                "status_employee": "aktif",
+                                                "photo_employee": "https://ess-celerates.com/assets/1.jpg"
+                                            },
+                                            "data_secunder": {
+                                                "no_kartu_keluarga": "111122223333444",
+                                                "status_saat_ini": "kawin",
+                                                "tanggungan": "2",
+                                                "no_rek": "12345678",
+                                                "nama_rek": "Mark Twain",
+                                                "no_npwp": "111122223333444",
+                                                "no_bpjs_kesehatan": "111122223333444",
+                                                "no_bpjs_ketenagakerjaan": "111122223333444"
+                                            },
+                                            "file": {
+                                                "file_kartu_keluarga": "https://ess-celerates.com/assets/1.jpg",
+                                                "file_ktp": "https://ess-celerates.com/assets/2.jpg",
+                                                "file_ijazah": "https://ess-celerates.com/assets/3.jpg",
+                                                "file_npwp": "https://ess-celerates.com/assets/4.jpg",
+                                                "file_bpjs_kesehatan": "https://ess-celerates.com/assets/5.jpg",
+                                                "file_bpjs_ketenagakerjaan": "https://ess-celerates.com/assets/6.jpg",
+                                                "file_sertifikat_keahlian": "https://ess-celerates.com/assets/6.jpg"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Post Data Karyawan",
+                "description": "End point untuk isi data sekunder karyawan",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/employeeId"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/KarywanSekunder"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success entry mengisi data sekunder",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "timesheet_success": {
+                                        "description": "karyawan mengisi data sekunder",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": 200,
+                                            "message": "berhasil mengisi data sekunder!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "gagal mengisi data sekunder bad request",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "timesheet_bad_request": {
+                                        "description": "gagal mengisi data sekunder karna bad request",
+                                        "value": {
+                                            "status": "error",
+                                            "code": 400,
+                                            "message": "gagal mengisi data sekunder, silahkan isi coba lagi!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "gagal mengisi data sekunder, internal server error",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "timesheet_internal_server_error": {
+                                        "description": "gagal mengisi data sekunder karna internal server error",
+                                        "value": {
+                                            "status": "error",
+                                            "code": 500,
+                                            "message": "maaf terjadi kesalahan sistem, silahkan coba isi data sekunder lagi!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/approval/{picId}/kehadiran": {
+            "get": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "Approval"
+                ],
+                "summary": "View Page Approval",
+                "description": "Render Page Approval",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/picId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Render",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "success": {
+                                        "description": "Success Render Approval",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200",
+                                            "data_approval": [
+                                                {
+                                                    "id_approval": "ap-1",
+                                                    "id_absen": "ab-1",
+                                                    "tanngal_approval": "09 September 2022",
+                                                    "tujuan_approval": "absen masuk",
+                                                    "nama_employee": "Teddy Muhammad Ripa'i",
+                                                    "masuk": "08:00",
+                                                    "pulang": null,
+                                                    "proyek": [
+                                                        "PAMA Kalimantan Constructor",
+                                                        "Blue Bird Group"
+                                                    ],
+                                                    "notes": [
+                                                        {
+                                                            "nama_employee": "Teddy Muhammad Ripa'i",
+                                                            "tujuan_notes": "absen masuk",
+                                                            "notes": "Teddy Muhammad Ripa’i: Saya telat datang hari ini karena motor saya mogok, olinya bocor dan harus turun mesin."
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/approval/{picId}/kehadiran/{approvalId}": {
+            "put": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "Approval"
+                ],
+                "summary": "Update Approval kehadiran Karyawan",
+                "description": "End point untuk update approval status approval",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/picId"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/KarywanSekunder"
+                            },
+                            "examples": {
+                                "approval_diterima": {
+                                    "description": "Example value request body for update approval",
+                                    "value": {
+                                        "status_approval": "diterima",
+                                        "notes": null
+                                    }
+                                },
+                                "approval_ditolak": {
+                                    "description": "Example value request body for update approval",
+                                    "value": {
+                                        "status_approval": "ditolak",
+                                        "notes": null
+                                    }
+                                },
+                                "approval_with_notes": {
+                                    "description": "Example value request body for update approval",
+                                    "value": {
+                                        "status_approval": "ditolak",
+                                        "notes": {
+                                            "id_employee": "kyw-1",
+                                            "id_absen": "ab-1",
+                                            "feature_type": "absen",
+                                            "tujuan_notes": "absen masuk",
+                                            "notes_text": "alasan mulu dari kemarin"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success approval absen",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "success": {
+                                        "description": "pic melakukan approval",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": 200,
+                                            "message": "approval anda berhasil"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/approval/{picId}/timesheet": {
+            "get": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "Approval"
+                ],
+                "summary": "View Page Approval timesheet",
+                "description": "Render Page Approval Timesheet",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/employeeId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Render",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "success": {
+                                        "description": "Success Render Approval",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200",
+                                            "timesheet": [
+                                                {
+                                                    "id_timesheet": "tis-1",
+                                                    "id_employee": "kyw-1",
+                                                    "nama_employee": "Wahidin Halim Kusuma",
+                                                    "tanggal_timesheet": "09 September 2022",
+                                                    "detail_timesheet": [
+                                                        {
+                                                            "id_detail_timesheet": "dts-1",
+                                                            "start_at": "08:00",
+                                                            "finish_at": "12:00",
+                                                            "work_description": "Membuat laman auth PAMA Apps menggunakan ReactJS.",
+                                                            "proyek": "PAMA kalimantan group"
+                                                        },
+                                                        {
+                                                            "id_detail_timesheet": "dts-2",
+                                                            "start_at": "13:00",
+                                                            "finish_at": "17:00",
+                                                            "work_description": "Bug fixing blue bird pada transport App pada modul transport",
+                                                            "proyek": "Blue Bird group"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id_timesheet": "tis-2",
+                                                    "id_employee": "kyw-2",
+                                                    "nama_employee": "Badang Gede",
+                                                    "tanggal_timesheet": "09 September 2022",
+                                                    "detail_timesheet": [
+                                                        {
+                                                            "id_detail_timesheet": "dts-3",
+                                                            "start_at": "08:00",
+                                                            "finish_at": "12:00",
+                                                            "work_description": "Membuat laman auth PAMA Apps menggunakan ReactJS.",
+                                                            "proyek": "PAMA kalimantan group"
+                                                        },
+                                                        {
+                                                            "id_detail_timesheet": "dts-4",
+                                                            "start_at": "13:00",
+                                                            "finish_at": "17:00",
+                                                            "work_description": "Bug fixing blue bird pada transport App pada modul transport",
+                                                            "proyek": "Blue Bird group"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "Approval"
+                ],
+                "summary": "Post Approval timesheet Karyawan",
+                "description": "End point untuk post approval timesheet",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/picId"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/KarywanSekunder"
+                            },
+                            "examples": {
+                                "approval_diterima": {
+                                    "description": "Example value request body for approval timesheet",
+                                    "value": {
+                                        "status_approval": "diterima",
+                                        "feature_type": "timesheet",
+                                        "whos_approv": "kyw-1",
+                                        "feature_id": "tis-1",
+                                        "tujuan_approval": "persetujuan",
+                                        "notes": null
+                                    }
+                                },
+                                "approval_ditolak": {
+                                    "description": "Example value request body for approval timesheet",
+                                    "value": {
+                                        "status_approval": "ditolak",
+                                        "feature_type": "timesheet",
+                                        "whos_approv": "kyw-1",
+                                        "feature_id": "tis-1",
+                                        "tujuan_approval": "persetujuan",
+                                        "notes": null
+                                    }
+                                },
+                                "approval_with_notes": {
+                                    "description": "Example value request body for approval timesheet",
+                                    "value": {
+                                        "status_approval": "ditolak",
+                                        "feature_type": "timesheet",
+                                        "whos_approv": "kyw-1",
+                                        "feature_id": "tis-1",
+                                        "tujuan_approval": "persetujuan",
+                                        "notes": {
+                                            "id_employee": "kyw-1",
+                                            "id_approval": "tis-1",
+                                            "feature_type": "absen",
+                                            "tujuan_notes": "approval timesheet",
+                                            "notes_text": "kerja bagus!!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success approval timesheet",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "success": {
+                                        "description": "pic melakukan approval",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": 200,
+                                            "message": "approval anda berhasil"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/data-karyawan/{picId}/detail-kehadiran/{employeeId}": {
+            "get": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "Data Karyawan"
+                ],
+                "summary": "View Page Data Detail Karyawan",
+                "description": "Render Page Data Detail Karyawan",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/picId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/employeeId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Render",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "success": {
+                                        "description": "Success Render Page Data Detail Karyawan",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200",
+                                            "nama_employee": "Marco Polo",
+                                            "id_employee": "kyw-2",
+                                            "tanggal_filter": "01-09-2022 - 12-09-2022",
+                                            "data_kehadiran": [
+                                                {
+                                                    "tanggal_absen": "09-09-2022",
+                                                    "lokasi_absen": "kantor celerates",
+                                                    "masuk": "08:00",
+                                                    "pulang": "17:15",
+                                                    "id_absen": "ab-1",
+                                                    "proyek": [
+                                                        "PAMA Kalimantan Constructor",
+                                                        "Blue Bird Group"
+                                                    ],
+                                                    "approval": [
+                                                        {
+                                                            "pic_approval": "HR",
+                                                            "status_approval": "ditolak",
+                                                            "tujuan_approval": "absen masuk",
+                                                            "created_at": "2022-09-11 12:50:01",
+                                                            "feature_type": "absen",
+                                                            "id_absen": "ab-1"
+                                                        },
+                                                        {
+                                                            "pic_approval": "HR",
+                                                            "status_approval": "ditolak",
+                                                            "tujuan_approval": "absen pulang",
+                                                            "created_at": "2022-09-12 10:20:01",
+                                                            "feature_type": "absen",
+                                                            "id_absen": "ab-1"
+                                                        }
+                                                    ],
+                                                    "notes": [
+                                                        {
+                                                            "id_absen": "ab-1",
+                                                            "feature_type": "absen",
+                                                            "tujuan_notes": "absen masuk",
+                                                            "notes_text": "maaf. saya datang telat hari ini karna ban saya bocor ditengah jalan.",
+                                                            "created_at": "2022-09-12 10:20:00",
+                                                            "nama_karyawan": "Teddy",
+                                                            "posisi": "Talent SAD"
+                                                        },
+                                                        {
+                                                            "id_absen": "ab-1",
+                                                            "feature_type": "absen",
+                                                            "tujuan_notes": "absen masuk",
+                                                            "notes_text": "dari kemarin alasannya itu itu aja...",
+                                                            "created_at": "2022-09-08 12:30:00",
+                                                            "nama_karyawan": "Yoga",
+                                                            "posisi": "HRD"
+                                                        },
+                                                        {
+                                                            "id_absen": "ab-1",
+                                                            "feature_type": "absen",
+                                                            "tujuan_notes": "absen pulang",
+                                                            "notes_text": "maaf mas. saya pulang duluan, soalnya saya lagi gak enak badan.",
+                                                            "created_at": "2022-09-12 15:20:00",
+                                                            "nama_karyawan": "Teddy",
+                                                            "posisi": "Talent SAD"
+                                                        },
+                                                        {
+                                                            "id_absen": "ab-1",
+                                                            "feature_type": "absen",
+                                                            "tujuan_notes": "absen tealt",
+                                                            "notes_text": "ada aja alasannya...",
+                                                            "created_at": "2022-09-12 18:30:00",
+                                                            "nama_karyawan": "Yoga",
+                                                            "posisi": "HRD"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "tanggal_absen": "08-09-2022",
+                                                    "lokasi_absen": "kantor celerates",
+                                                    "masuk": "08:00",
+                                                    "pulang": "17:15",
+                                                    "id_absen": "ab-2",
+                                                    "proyek": [
+                                                        "PAMA Kalimantan Constructor",
+                                                        "Blue Bird Group"
+                                                    ],
+                                                    "approval": [
+                                                        {
+                                                            "pic_approval": "HR",
+                                                            "status_approval": "diterima",
+                                                            "tujuan_approval": "absen masuk",
+                                                            "created_at": "2022-09-11 12:50:01",
+                                                            "feature_type": "absen",
+                                                            "id_absen": "ab-2"
+                                                        },
+                                                        {
+                                                            "pic_approval": "HR",
+                                                            "status_approval": "diterima",
+                                                            "tujuan_approval": "absen pulang",
+                                                            "created_at": "2022-09-12 10:20:01",
+                                                            "feature_type": "absen",
+                                                            "id_absen": "ab-1"
+                                                        }
+                                                    ],
+                                                    "notes": [
+                                                        {
+                                                            "id_absen": "ab-2",
+                                                            "feature_type": "absen",
+                                                            "tujuan_notes": "absen masuk",
+                                                            "notes_text": "Saya datang tepat waktu hari ini, saya sangat bahagia menjadi pegawai yang disiplin dan berdedikasi pada diri saya sendiri.",
+                                                            "created_at": "2022-09-12 10:20:00",
+                                                            "nama_karyawan": "Teddy",
+                                                            "posisi": "Talent SAD"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/data-karyawan/{picId}/detail-timesheet/{employeeId}": {
+            "get": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "Data Karyawan"
+                ],
+                "summary": "View Page Data Detail Timesheet Karyawan",
+                "description": "Render Page Data Detail Timesheet Karyawan",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/picId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/employeeId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Render",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "success": {
+                                        "description": "Success Render Page Data Detail Timesheet Karyawan",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200",
+                                            "nama_employee": "Marco Polo",
+                                            "id_employee": "kyw-2",
+                                            "tanggal_filter": "01-09-2022 - 12-09-2022",
+                                            "timesheet": [
+                                                {
+                                                    "tanggal_timesheet": "09-09-2022",
+                                                    "id_timesheet": "tis-1",
+                                                    "detail_timesheet": [
+                                                        {
+                                                            "id_detail_timesheet": "dts-1",
+                                                            "start_at": "08:00",
+                                                            "finish_at": "12:00",
+                                                            "id_project": "pj-1",
+                                                            "project_name": "PAMA Kalimantan Constructor",
+                                                            "work_description": "Membuat laman auth PAMA App’s menggunakan React JS, menambahkan validasi pada form..."
+                                                        },
+                                                        {
+                                                            "id_detail_timesheet": "dts-2",
+                                                            "start_at": "13:00",
+                                                            "finish_at": "17:00",
+                                                            "id_project": "pj-2",
+                                                            "project_name": "Blue Bird Group",
+                                                            "work_description": "Bug Fixing Blue Bird Transport App pada modul transaksi "
+                                                        }
+                                                    ],
+                                                    "approval": [
+                                                        {
+                                                            "pic_approval": "Tech Lead SAD",
+                                                            "status_approval": "ditolak",
+                                                            "tujuan_approval": "timesheet",
+                                                            "created_at": "2022-09-11 12:50:01",
+                                                            "feature_type": "timeseeht",
+                                                            "id_timesheet": "tis-1",
+                                                            "whos_approv": "kyw-5"
+                                                        }
+                                                    ],
+                                                    "notes": [
+                                                        {
+                                                            "id_timesheet": "tis-1",
+                                                            "feature_type": "timesheet",
+                                                            "tujuan_notes": "timesheet",
+                                                            "notes_text": "kok sama dengan yang kemarin.",
+                                                            "created_at": "2022-09-12 10:20:00",
+                                                            "nama_karyawan": "Marco",
+                                                            "employee_id": "kyw-5",
+                                                            "posisi": "Tech Lead SAD"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "tanggal_timesheet": "08-09-2022",
+                                                    "id_timesheet": "tis-2",
+                                                    "detail_timesheet": [
+                                                        {
+                                                            "id_detail_timesheet": "dts-3",
+                                                            "start_at": "08:00",
+                                                            "finish_at": "12:00",
+                                                            "id_project": "pj-1",
+                                                            "project_name": "PAMA Kalimantan Constructor",
+                                                            "work_description": "Membuat laman auth PAMA App’s menggunakan React JS, menambahkan validasi pada form..."
+                                                        },
+                                                        {
+                                                            "id_detail_timesheet": "dts-4",
+                                                            "start_at": "13:00",
+                                                            "finish_at": "17:00",
+                                                            "id_project": "pj-2",
+                                                            "project_name": "Blue Bird Group",
+                                                            "work_description": "Bug Fixing Blue Bird Transport App pada modul transaksi "
+                                                        }
+                                                    ],
+                                                    "approval": [
+                                                        {
+                                                            "pic_approval": "Tech Lead SAD",
+                                                            "status_approval": "ditolak",
+                                                            "tujuan_approval": "timesheet",
+                                                            "created_at": "2022-09-11 12:50:01",
+                                                            "feature_type": "timeseeht",
+                                                            "id_timesheet": "tis-2",
+                                                            "whos_approv": "kyw-5"
+                                                        }
+                                                    ],
+                                                    "notes": [
+                                                        {
+                                                            "id_timesheet": "tis-2",
+                                                            "feature_type": "timesheet",
+                                                            "tujuan_notes": "timesheet",
+                                                            "notes_text": "kok sama dengan yang kemarin.",
+                                                            "created_at": "2022-09-12 10:20:00",
+                                                            "nama_karyawan": "Marco",
+                                                            "employee_id": "kyw-5",
+                                                            "posisi": "Tech Lead SAD"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/data-karyawan/{picId}/profile/{employeeId}/akun": {
+            "get": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "Data Karyawan"
+                ],
+                "summary": "View Page Profile data karyawan akun",
+                "description": "Render Page Akun data karyawan akun",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/picId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/employeeId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Render",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "success": {
+                                        "description": "Success Render Page Akun",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200",
+                                            "nama_karyawan": "Mark Twain",
+                                            "email": "mark.twain@celerates.com"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/data-karyawan/{picId}/profile/{employeeId}/data-detail": {
+            "get": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "Data Karyawan"
+                ],
+                "summary": "View Page Profile Data",
+                "description": "Render Page Data",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/employeeId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Render",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "data_primer_null": {
+                                        "description": "Success Render Page Data",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200",
+                                            "data_primer": {
+                                                "tempat_lahir": "Jakarta",
+                                                "tanggal_lahir": "17-08-1945",
+                                                "nik": "11112222333344444",
+                                                "alamat": "Jalan Mekar Arum no 5 RT 05 RW 05 Kelurahan Pasar Sabtu, Kecamatan Lapang Gede, Jakarta Tenggara",
+                                                "pendidikan_terakhir": "Sarjana",
+                                                "nama_pendidikan_terakhir": "Universitas Nusantara",
+                                                "jurusan_pendidikan_terakhir": "Teknik Mancing",
+                                                "alamat_email_aktif": "mark_twain@gmail.com",
+                                                "no_tlp_aktif": "081234567890",
+                                                "kontak_darurat": "Ayah",
+                                                "no_tlp_kontak_darurat": "081234567890",
+                                                "status_employee": "aktif",
+                                                "photo_employee": "https://ess-celerates.com/assets/1.jpg"
+                                            },
+                                            "data_secunder": null
+                                        }
+                                    },
+                                    "data_primer_not_null": {
+                                        "description": "Success Render Page Data",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200",
+                                            "data_primer": {
+                                                "tempat_lahir": "Jakarta",
+                                                "tanggal_lahir": "17-08-1945",
+                                                "nik": "11112222333344444",
+                                                "alamat": "Jalan Mekar Arum no 5 RT 05 RW 05 Kelurahan Pasar Sabtu, Kecamatan Lapang Gede, Jakarta Tenggara",
+                                                "pendidikan_terakhir": "Sarjana",
+                                                "nama_pendidikan_terakhir": "Universitas Nusantara",
+                                                "jurusan_pendidikan_terakhir": "Teknik Mancing",
+                                                "alamat_email_aktif": "mark_twain@gmail.com",
+                                                "no_tlp_aktif": "081234567890",
+                                                "kontak_darurat": "Ayah",
+                                                "no_tlp_kontak_darurat": "081234567890",
+                                                "status_employee": "aktif",
+                                                "photo_employee": "https://ess-celerates.com/assets/1.jpg"
+                                            },
+                                            "data_secunder": {
+                                                "no_kartu_keluarga": "111122223333444",
+                                                "status_saat_ini": "kawin",
+                                                "tanggungan": "2",
+                                                "no_rek": "12345678",
+                                                "nama_rek": "Mark Twain",
+                                                "no_npwp": "111122223333444",
+                                                "no_bpjs_kesehatan": "111122223333444",
+                                                "no_bpjs_ketenagakerjaan": "111122223333444"
+                                            },
+                                            "file": {
+                                                "file_kartu_keluarga": "https://ess-celerates.com/assets/1.jpg",
+                                                "file_ktp": "https://ess-celerates.com/assets/2.jpg",
+                                                "file_ijazah": "https://ess-celerates.com/assets/3.jpg",
+                                                "file_npwp": "https://ess-celerates.com/assets/4.jpg",
+                                                "file_bpjs_kesehatan": "https://ess-celerates.com/assets/5.jpg",
+                                                "file_bpjs_ketenagakerjaan": "https://ess-celerates.com/assets/6.jpg",
+                                                "file_sertifikat_keahlian": "https://ess-celerates.com/assets/6.jpg"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/konfigurasi/{user_id}/email": {
+            "get": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "Konfigurasi"
+                ],
+                "summary": "View Konfigurasi Email",
+                "description": "Render Page Konfigurasi Email",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Render ",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "belum_absen_masuk_karyawan": {
+                                        "description": "Example value responese page konfigurasi email",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200",
+                                            "data_email": [
+                                                {
+                                                    "id_email_validation": "1",
+                                                    "email": "celerates.com"
+                                                },
+                                                {
+                                                    "id_email_validation": "2",
+                                                    "email": "celerates.co.id"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "Konfigurasi"
+                ],
+                "summary": "Post Approval timesheet Karyawan",
+                "description": "End point untuk post approval timesheet",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/emailValidation"
+                            },
+                            "examples": {
+                                "success": {
+                                    "description": "Example value request body for approval email",
+                                    "value": {
+                                        "status_approval": "celerates.com"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success create email validation",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "success": {
+                                        "description": "admin menambahkan email validation",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": 200,
+                                            "message": "Email for validation register has been created"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/konfigurasi/{user_id}/kehadiran": {
+            "get": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "Konfigurasi"
+                ],
+                "summary": "View Konfigurasi Kehadiran",
+                "description": "Render Page Konfigurasi Kehadiran",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success Render",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "belum_absen_masuk_karyawan": {
+                                        "description": "Success render page konfigurasi absen",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": "200"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "EssAuth": []
+                    }
+                ],
+                "tags": [
+                    "Konfigurasi"
+                ],
+                "summary": "Post Konfigurasi Absen",
+                "description": "End point untuk post konfigurasi absen",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/konfigurasiKehadiran"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success create konfigurasi absen",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "success": {
+                                        "description": "admin sukses create konfigurasi absen",
+                                        "value": {
+                                            "status": "ok",
+                                            "code": 200,
+                                            "message": "success create absen configuration"
+                                        }
                                     }
                                 }
                             }
@@ -442,20 +2621,86 @@
             }
         },
         "parameters": {
-            "productId": {
-                "name": "productId",
+            "userId": {
+                "name": "userId",
                 "in": "path",
                 "required": true,
-                "description": "productId id for getById, update and delete",
+                "description": "userId for get data by user id",
                 "schema": {
                     "type": "string",
                     "minLength": 1,
                     "maxLength": 100
                 },
                 "examples": {
-                    "golang": {
-                        "description": "Sample mini project parameter for Golang",
-                        "value": 1
+                    "userId": {
+                        "description": "Sample ess project parameter for userId",
+                        "value": "usr-1"
+                    }
+                }
+            },
+            "employeeId": {
+                "name": "employeeId",
+                "in": "path",
+                "required": true,
+                "description": "employeeId for get data by employee id",
+                "schema": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                },
+                "examples": {
+                    "employeeId": {
+                        "description": "Sample ess project parameter for employeeId",
+                        "value": "kyw-1"
+                    }
+                }
+            },
+            "picId": {
+                "name": "picId",
+                "in": "path",
+                "required": true,
+                "description": "picId for get data by employee id",
+                "schema": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                },
+                "examples": {
+                    "picId": {
+                        "description": "Sample ess project parameter for employeeId",
+                        "value": "kyw-1"
+                    }
+                }
+            },
+            "approvalId": {
+                "name": "approvalId",
+                "in": "path",
+                "required": true,
+                "description": "approvalId for update status approval",
+                "schema": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                },
+                "examples": {
+                    "approvalId": {
+                        "description": "Sample ess project parameter for approvalId",
+                        "value": "ap-1"
+                    }
+                }
+            },
+            "Authentication": {
+                "name": "Authorization",
+                "in": "header",
+                "description": "Header value for authentication",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                },
+                "examples": {
+                    "EssAuth": {
+                        "description": "Sample header for authentication",
+                        "value": "ashjkdhasdk8i38959kjhgjksahdfk"
                     }
                 }
             }
@@ -606,66 +2851,349 @@
                     }
                 }
             },
-            "Products": {
+            "Login": {
                 "type": "object",
                 "properties": {
-                    "product_id": {
-                        "type": "string"
-                    },
-                    "product_name": {
-                        "type": "string"
-                    },
-                    "category": {
-                        "type": "string"
-                    },
-                    "price": {
-                        "type": "number",
-                        "format": "int32"
-                    },
-                    "stock": {
-                        "type": "number",
-                        "format": "int32"
-                    },
-                    "description_product": {
-                        "type": "string"
-                    }
-                }
-            },
-            "CreateOrUpdateProduct": {
-                "type": "object",
-                "properties": {
-                    "product_name": {
+                    "email": {
                         "type": "string",
-                        "minLength": 1,
                         "required": [
                             "true"
-                        ]
+                        ],
+                        "description": "Email User Login",
+                        "example": "https://ess.com/images/assert/akdfg08923145asdf.jpg"
+                    }
+                }
+            },
+            "ResponeLoginFailed": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer"
                     },
-                    "category": {
-                        "type": "integer",
-                        "format": "int32",
-                        "required": [
-                            "true"
-                        ]
+                    "status": {
+                        "type": "string"
                     },
-                    "price": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "stock": {
-                        "type": "number",
-                        "format": "int32",
-                        "default": 0
-                    },
-                    "description_product": {
+                    "message": {
                         "type": "string"
                     }
                 }
             },
-            "arrayGetProducts": {
-                "type": "array",
-                "items": {
-                    "$ref": "#/components/schemas/Products"
+            "ResponeLoginSuccess": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "token": {
+                        "type": "string"
+                    }
+                }
+            },
+            "AbsenMasuk": {
+                "type": "object",
+                "properties": {
+                    "tanggal_absen": {
+                        "type": "string",
+                        "format": "DATE(dd-mm-yyyy)",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Tanggal absen",
+                        "example": "12-08-2022"
+                    },
+                    "lokasi_absen": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Lokasi Absen",
+                        "example": "kantor celerates"
+                    },
+                    "catatan": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Catatan",
+                        "example": "-"
+                    }
+                }
+            },
+            "AbsenPulang": {
+                "type": "object",
+                "properties": {
+                    "absen_id": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Tanggal absen",
+                        "example": "ab-1"
+                    },
+                    "lokasi_absen": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Lokasi Absen",
+                        "example": "kantor celerates"
+                    },
+                    "catatan": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Catatan",
+                        "example": "-"
+                    }
+                }
+            },
+            "KarywanSekunder": {
+                "type": "object",
+                "properties": {
+                    "no_kartu_keluarga": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Nomor Kartu keluarga",
+                        "example": "1213214141424"
+                    },
+                    "file_kartu_keluarga": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "file kartu keluarga",
+                        "example": "kk.jpg"
+                    },
+                    "status_kawin": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Status Kawin",
+                        "example": "Belum kawin"
+                    },
+                    "tanggungan": {
+                        "type": "integer",
+                        "format": "int",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Tanggungan",
+                        "example": 2
+                    },
+                    "no_rek": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Nomor Rekening",
+                        "example": "123456789"
+                    },
+                    "nama_rek": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Nama Rekening Bank",
+                        "example": "Mark Twain"
+                    },
+                    "file_ijazah": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "file ijazah",
+                        "example": "ijazah.jpg"
+                    },
+                    "status_npwp": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Status NPWP",
+                        "example": "sudah"
+                    },
+                    "no_npwp": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Nomor NPWP",
+                        "example": "1111222233334444"
+                    },
+                    "file_npwp": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "file npwp",
+                        "example": "npwp.jpg"
+                    },
+                    "status_bpjs_kesehatan": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Status bpjs kesehatan",
+                        "example": "sudah"
+                    },
+                    "no_bpjs_kesehatan": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "nomor bpjs kesehatan",
+                        "example": "1111222233334444"
+                    },
+                    "file_bpjs_kesehatan": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "file bpjs kesehatan",
+                        "example": "bpjs-kesehatan.jpg"
+                    },
+                    "status_bpjs_ketenaga_kerjaan": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Status bpjs ketenagakerjaan",
+                        "example": "sudah"
+                    },
+                    "no_bpjs_ketenagakerjaan": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "nomor bpjs ketenagakerjaan",
+                        "example": "1111222233334444"
+                    },
+                    "file_bpjs_ketenagakerjaan": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "file bpjs ketenagakerjaan",
+                        "example": "bpjs-ketenagakerjaan.jpg"
+                    },
+                    "file_sertifikat_keahlian": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "file sertifikat keahlian",
+                        "example": "file-sertifikat-keahlian.jpg"
+                    }
+                }
+            },
+            "updateApproval": {
+                "type": "object",
+                "properties": {
+                    "id_approval": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Id Approval",
+                        "example": "ap-1"
+                    },
+                    "status_approval": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "Status Approval",
+                        "example": "diterima"
+                    }
+                }
+            },
+            "emailValidation": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "email",
+                        "example": "celerates.com"
+                    }
+                }
+            },
+            "konfigurasiKehadiran": {
+                "type": "object",
+                "properties": {
+                    "pic_absensi": {
+                        "type": "string",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "untuk id_employee_position",
+                        "example": "epo-1"
+                    },
+                    "durasi_jam_kerja": {
+                        "type": "integer",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "durasi jam kerja",
+                        "example": 9
+                    },
+                    "interval_keterlembatan": {
+                        "type": "integer",
+                        "format": "float",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "interval keterlambatan durasi menit",
+                        "example": 15
+                    },
+                    "bobot_keterlambatan": {
+                        "type": "integer",
+                        "format": "float",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "bobot keterlambatan",
+                        "example": 0.25
+                    },
+                    "maksimal_bobot_keterlambatan": {
+                        "type": "integer",
+                        "format": "float",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "interval keterlambatan durasi menit",
+                        "example": 1
+                    },
+                    "minimal_masuk_jam_kerja": {
+                        "type": "string",
+                        "format": "TIME(HH:MM)",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "minimal masuk jam kerja",
+                        "example": "08:00"
+                    },
+                    "maksimal_masuk_jam_kerja": {
+                        "type": "string",
+                        "format": "TIME(HH:MM)",
+                        "required": [
+                            "true"
+                        ],
+                        "description": "maksimal masuk jam kerja",
+                        "example": "10:00"
+                    }
                 }
             }
         }
