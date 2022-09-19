@@ -1,4 +1,5 @@
 import { Logo } from "../../../Images";
+import { NavLink } from "react-router-dom";
 
 const Login = () => {
   return (
@@ -42,7 +43,8 @@ const Login = () => {
             </a>
             <br></br>
             <label className="text-center d-block">
-              Belum punya akun ? Daftar disini!
+              Belum punya akun ? <NavLink to="/register">Daftar</NavLink>{" "}
+              disini!
             </label>
           </div>
         </div>

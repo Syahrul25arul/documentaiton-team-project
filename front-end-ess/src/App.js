@@ -1,18 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
-import Login from 'pages/Auth/Login/login';
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
-
+import "./App.css";
+import Login from "pages/Auth/Login/login";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Register from "pages/Auth/Register/register";
+import RegisterPrimer from "pages/Auth/Register/register-primer";
 
 function App() {
-  return(
+  return (
     <BrowserRouter>
       <Routes>
-        <Route path ="/" element={<Login />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/register-primer" element={<RegisterPrimer />} />
       </Routes>
-    
     </BrowserRouter>
-  )
+  );
 }
 
 export default App;
