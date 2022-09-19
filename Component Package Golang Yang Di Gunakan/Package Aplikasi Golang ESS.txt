@@ -1,0 +1,12 @@
+#FrameWork Gin
+go get -u github.com/gin-gonic/gin
+
+#ORM Gorm
+go get -u gorm.io/gorm
+go get -u gorm.io/driver/postgres
+
+#Conection Env
+go get github.com/joho/godotenv
+
+#Logger Message
+go get -u go.uber.org/zap
