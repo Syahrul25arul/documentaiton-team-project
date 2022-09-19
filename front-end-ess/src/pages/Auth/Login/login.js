@@ -1,14 +1,14 @@
 import { Logo } from "../../../Images";
+import { Link } from 'react-router-dom'
 
 const Login = () => {
   return (
     <>
       <div className="Login">
-        <br></br>
         <div className="container">
           <div className="col-4 mx-auto">
-            <img src={Logo["Logo Celerates.png"]} className="img-fluid mb-5" />
-            <h2 className="text-center d-block">Masuk</h2>
+            <img src={Logo["Logo-Celerates.png"]} style={{ width:"50%", margin:"67px" }} className="img-fluid mb-4" alt=""/>
+            <h3 className="text-center d-block">Masuk</h3>
             <label for="inputEmail" className="form-label"></label>
             Email
             <br></br>
@@ -30,15 +30,15 @@ const Login = () => {
               aria-describedby="passwordHelpBlock"
             />
             <br></br>
-            <a
-              href="#"
+            <Link
+              to="#"
               className="btn btn-primary disabled text-center d-block"
               tabindex="-1"
               role="button"
               aria-disabled="true"
             >
               Masuk
-            </a>
+            </Link>
             <br></br>
             <label className="text-center d-block">
               Belum punya akun ? Daftar disini!
