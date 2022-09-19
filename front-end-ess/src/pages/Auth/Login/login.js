@@ -5,11 +5,10 @@ const Login = () => {
     <>
       <div className="Login">
         <br></br>
-        <img src={Logo["Logo Celerates.png"]} className="img-fluid" />
         <div className="container">
           <div className="col-4 mx-auto">
+            <img src={Logo["Logo Celerates.png"]} className="img-fluid mb-5" />
             <h2 className="text-center d-block">Masuk</h2>
-            <br></br>
             <label for="inputEmail" className="form-label"></label>
             Email
             <br></br>
@@ -20,11 +19,9 @@ const Login = () => {
               placeholder="Masukan Email"
             />
             <br></br>
-            <br></br>
             <label for="inputPassword" className="form-label">
               Password
             </label>
-            <br></br>
             <input
               placeholder="Masukan Password"
               type="password"
@@ -32,7 +29,6 @@ const Login = () => {
               className="form-control"
               aria-describedby="passwordHelpBlock"
             />
-            <br></br>
             <br></br>
             <a
               href="#"
