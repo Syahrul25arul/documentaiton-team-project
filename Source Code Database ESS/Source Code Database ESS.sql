@@ -340,23 +340,48 @@ CREATE TABLE timesheet_configuration(
 	  ON DELETE SET NULL
 );
 
---cuti_configuration tinggal enum untuk status_reset_cuti (BELUM)
--- CREATE TABLE cuti_configuration(
---    id_employee_position VARCHAR(30) NOT NULL,
---    status_reset_cuti INT,
---    bulan_reset_cuti INT,
---    factor_reset_cuti FLOAT8,
---    maksimal_cuti_perbulan INT,
---    pic_cuti VARCHAR(150)
---    CONSTRAINT fk_employee_position
---       FOREIGN KEY(id_employee_position) 
--- 	  REFERENCES employee_position(id_employee_position)
--- 	  ON DELETE SET NULL
--- );
+CREATE TYPE statusresetstatus AS ENUM ('true', 'false');
+CREATE TABLE cuti_configuration(
+   id_employee_position VARCHAR(30) NOT NULL,
+   status_reset_cuti statusresetstatus,
+   bulan_reset_cuti INT,
+   factor_reset_cuti FLOAT8,
+   maksimal_cuti_perbulan INT,
+   pic_cuti VARCHAR(150),
+   CONSTRAINT fk_employee_position
+      FOREIGN KEY(id_employee_position) 
+	  REFERENCES employee_position(id_employee_position)
+	  ON DELETE SET NULL
+);
 
---APPROVAL BELUM
 
---NOTES BELUM
+CREATE TABLE approval(
+   id_approval VARCHAR(30) NOT NULL,
+   feature_type VARCHAR(85),
+   whos_approv VARCHAR(150),
+   status_approv VARCHAR(60),
+   feature_id VARCHAR(30) NOT NULL,
+   tujuan_approval VARCHAR(150),
+   created_at TIMESTAMP,
+   updated_at TIMESTAMP,
+   keterangan TEXT,
+   PRIMARY KEY(id_approval)
+);
+
+CREATE TABLE notes(
+   id_notes VARCHAR(30) NOT NULL,
+   id_employe VARCHAR(30) NOT NULL,
+   feature_id VARCHAR(30) NOT NULL,
+   notes TEXT,
+   feature_type VARCHAR(85),
+   tujuan_notes VARCHAR(150),
+   created_at TIMESTAMP,
+   PRIMARY KEY(id_notes),
+   CONSTRAINT fk_employe
+      FOREIGN KEY(id_employe) 
+	  REFERENCES employee(id_employe)
+	  ON DELETE SET NULL
+);
 
 
 CREATE TYPE employestatus AS ENUM ('aktif', 'nonaktif');
