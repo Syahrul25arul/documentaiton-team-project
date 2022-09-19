@@ -10,7 +10,7 @@
         --
         * email : VARCHAR
         * password : VARCHAR
-        * verify_email : enum
+        * verify_email : timestamps
         * user_role : enum
     }
     entity OurCompany {
