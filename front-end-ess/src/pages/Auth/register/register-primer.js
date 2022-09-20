@@ -1,11 +1,6 @@
 import { Logo } from "../../../Images";
-<<<<<<< HEAD
-// import { NavLink } from "react-router-dom";
-import { Button, Dropdown } from "components/button";
-=======
 import { NavLink } from "react-router-dom";
-import { Button, Select, ButtonSmall } from "components/button";
->>>>>>> 3bf84980ab8676d1d4b68eb938c13ea8592c6f67
+import { Button, Select } from "components/button";
 const RegisterPrimer = () => {
   return (
     <>
