@@ -1,4 +1,5 @@
 import Button from "./button";
-import Dropdown from "./button-dropdown";
+import Select from "./button-dropdown";
+import ButtonSmall from "./button-small";
 
-export { Button, Dropdown };
+export { Button, Select, ButtonSmall };

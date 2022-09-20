@@ -10,7 +10,7 @@ const Login = () => {
           <div className="col-4 mx-auto">
             <img src={Logo["Logo Celerates.png"]} className="img-fluid mb-5" alt=""/>
             <h2 className="text-center d-block">Masuk</h2>
-            <label for="inputEmail" className="form-label">
+            <label htmlFor="inputEmail" className="form-label">
               Email
             </label>
             <br></br>
@@ -21,7 +21,7 @@ const Login = () => {
               placeholder="Masukan Email"
             />
             <br></br>
-            <label for="inputPassword" className="form-label">
+            <label htmlFor="inputPassword" className="form-label">
               Password
             </label>
             <input
@@ -35,7 +35,7 @@ const Login = () => {
             <NavLink
               to="#"
               className="btn btn-primary text-center d-block"
-              tabindex="-1"
+              tabIndex="-1"
               role="button"
               aria-disabled="true"
             >

@@ -1,6 +1,11 @@
 import { Logo } from "../../../Images";
+<<<<<<< HEAD
 // import { NavLink } from "react-router-dom";
 import { Button, Dropdown } from "components/button";
+=======
+import { NavLink } from "react-router-dom";
+import { Button, Select, ButtonSmall } from "components/button";
+>>>>>>> 3bf84980ab8676d1d4b68eb938c13ea8592c6f67
 const RegisterPrimer = () => {
   return (
     <>
@@ -55,10 +60,59 @@ const RegisterPrimer = () => {
               ></textarea>
             </div>
             <br></br>
+            <label htmlFor="inputPendidikan">Pendidikan Terakhir</label>
+            <Select>Pendidikan</Select>
+            <br></br>
+            <label htmlFor="inputInstitusi" className="form-label">
+              Nama Institusi Pendidikan Terakhir
+            </label>
+            <input
+              type="NamaInstitusi"
+              id="inputInstitusi"
+              className="form-control"
+              placeholder="Contoh: Universitas Airlangga"
+            />
+            <br></br>
+            <label htmlFor="inputHP" className="form-label">
+              No Handphone Aktif
+            </label>
+            <input
+              type="noHP"
+              id="inputHP"
+              className="form-control"
+              placeholder="Contoh: 08XXXXXXXXXX"
+            />
+            <br></br>
+            <label htmlFor="inputKontak" className="form-label">
+              Kontak Darurat
+            </label>
+            <input
+              type="KontakDarurat"
+              id="inputKontak"
+              className="form-control"
+              placeholder="Contoh: Orang Tua"
+            />
+            <br></br>
+            <label htmlFor="inputNoKontak" className="form-label">
+              No Kontak Darurat
+            </label>
+            <input
+              type="NoKontakDarurat"
+              id="inputNoKontak"
+              className="form-control"
+              placeholder="Contoh: 08XXXXXXXXXX"
+            />
+            <br></br>
+            <label htmlFor="inputFoto" className="form-label">
+              Foto
+            </label>
+            <input type="file" class="form-control-file" id="FormControlFile" />
+            <br></br>
             <Button>Submit</Button>
             <br></br>
-            <label htmlFor="inputPendidikan">Pendidikan Terakhir</label>
-            <Dropdown>Pendidikan</Dropdown>
+            <label className="text-center d-block">
+              Sudah punya akun ? <NavLink to="/">Masuk</NavLink> disini!
+            </label>
           </div>
         </div>
       </div>
