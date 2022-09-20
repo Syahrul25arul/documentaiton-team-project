@@ -1,35 +1,15 @@
 import React from "react";
 
-function Dropdown({ children }) {
+function Select() {
   return (
-    <div className="dropdown">
-      <button
-        className="btn btn-secondary dropdown-toggle"
-        type="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        {children}
-      </button>
-      <ul className="dropdown-menu">
-        <li>
-          <a className="dropdown-item" href="#">
-            Action
-          </a>
-        </li>
-        <li>
-          <a className="dropdown-item" href="#">
-            Another action
-          </a>
-        </li>
-        <li>
-          <a className="dropdown-item" href="#">
-            Something else here
-          </a>
-        </li>
-      </ul>
-    </div>
+    <select className="form-select" aria-label="Default select example">
+      {/* <option>{children}</option> */}
+      <option value={1}>D3</option>
+      <option value={2}>D4/S1</option>
+      <option value={3}>S2</option>
+      <option value={4}>S3</option>
+    </select>
   );
 }
 
-export default Dropdown;
+export default Select;
