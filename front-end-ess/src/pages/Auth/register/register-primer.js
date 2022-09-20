@@ -1,5 +1,5 @@
 import { Logo } from "../../../Images";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 import { Button, Dropdown } from "components/button";
 const RegisterPrimer = () => {
   return (
@@ -8,7 +8,7 @@ const RegisterPrimer = () => {
         <br></br>
         <div className="container">
           <div className="col-4 mx-auto">
-            <img src={Logo["Logo Celerates.png"]} className="img-fluid mb-5" />
+            <img src={Logo["Logo Celerates.png"]} className="img-fluid mb-5" alt=""/>
             <h2 className="text-center d-block">Data Primer</h2>
             <br></br>
             <label htmlFor="inputTempat" className="form-label">

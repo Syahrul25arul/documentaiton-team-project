@@ -8,7 +8,7 @@ const Register = () => {
         <br></br>
         <div className="container">
           <div className="col-4 mx-auto">
-            <img src={Logo["Logo Celerates.png"]} className="img-fluid mb-5" />
+            <img src={Logo["Logo Celerates.png"]} className="img-fluid mb-5" alt=""/>
             <h2 className="text-center d-block">Daftar</h2>
             <label htmlFor="inputNama" className="form-label">
               Nama Lengkap

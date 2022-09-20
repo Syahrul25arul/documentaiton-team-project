@@ -1,5 +1,5 @@
 import React from "react";
-
+import { NavLink } from 'react-router-dom'
 function Dropdown({ children }) {
   return (
     <div className="dropdown">
@@ -13,19 +13,19 @@ function Dropdown({ children }) {
       </button>
       <ul className="dropdown-menu">
         <li>
-          <a className="dropdown-item" href="#">
+          <NavLink to="#" className="dropdown-item" >
             Action
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a className="dropdown-item" href="#">
+          <NavLink to="#" className="dropdown-item" >
             Another action
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a className="dropdown-item" href="#">
+          <NavLink to="#" className="dropdown-item">
             Something else here
-          </a>
+          </NavLink>
         </li>
       </ul>
     </div>
