@@ -1,6 +1,6 @@
 import { Logo } from "../../../Images";
 import { NavLink } from "react-router-dom";
-import { Button, Select, ButtonSmall } from "components/button";
+import { Button, Select} from "components/button";
 const RegisterPrimer = () => {
   return (
     <>
@@ -8,7 +8,7 @@ const RegisterPrimer = () => {
         <br></br>
         <div className="container">
           <div className="col-4 mx-auto">
-            <img src={Logo["Logo Celerates.png"]} className="img-fluid mb-5" />
+            <img src={Logo["Logo Celerates.png"]} className="img-fluid mb-5" alt=""/>
             <h2 className="text-center d-block">Data Primer</h2>
             <br></br>
             <label htmlFor="inputTempat" className="form-label">
@@ -101,7 +101,7 @@ const RegisterPrimer = () => {
             <label htmlFor="inputFoto" className="form-label">
               Foto
             </label>
-            <input type="file" class="form-control-file" id="FormControlFile" />
+            <input type="file" className="form-control-file" id="FormControlFile" />
             <br></br>
             <Button>Submit</Button>
             <br></br>

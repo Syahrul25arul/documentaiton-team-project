@@ -8,8 +8,8 @@ const Login = () => {
         <br></br>
         <div className="container">
           <div className="col-4 mx-auto">
-            <img src={Logo["Logo Celerates.png"]} className="img-fluid mb-5" />
-            <h2 className="text-center d-block">Masuk</h2>
+            <img src={Logo["Logo Celerates.png"]} className="img-fluid mb-4" alt=""/>
+            <h4 className="text-center d-block">Masuk</h4>
             <label htmlFor="inputEmail" className="form-label">
               Email
             </label>
@@ -32,15 +32,14 @@ const Login = () => {
               aria-describedby="passwordHelpBlock"
             />
             <br></br>
-            <a
-              href="#"
+            <NavLink to=""
               className="btn btn-primary text-center d-block"
               tabIndex="-1"
               role="button"
               aria-disabled="true"
             >
               Masuk
-            </a>
+            </NavLink>
             <br></br>
             <label className="text-center d-block">
               Belum punya akun ? <NavLink to="/register">Daftar</NavLink>{" "}
