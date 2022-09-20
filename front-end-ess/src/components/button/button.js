@@ -1,9 +1,9 @@
 import React from "react";
-import { NavLink } from 'react-router-dom'
-function button({ children }) {
+
+function Button({ children }) {
   return (
-    <NavLink
-      to="#"
+    <button
+      href="#"
       className="btn text-white text-center d-block"
       tabIndex="-1"
       role="button"
@@ -11,8 +11,8 @@ function button({ children }) {
       style={{ backgroundColor: "#194567", width: "100%" }}
     >
       {children}
-    </NavLink>
+    </button>
   );
 }
 
-export default button;
+export default Button;

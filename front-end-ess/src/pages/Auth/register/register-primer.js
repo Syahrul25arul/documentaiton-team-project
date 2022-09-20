@@ -1,6 +1,6 @@
 import { Logo } from "../../../Images";
 import { NavLink } from "react-router-dom";
-import { Button, Select } from "components/button";
+import { Button, Select} from "components/button";
 const RegisterPrimer = () => {
   return (
     <>
@@ -101,7 +101,7 @@ const RegisterPrimer = () => {
             <label htmlFor="inputFoto" className="form-label">
               Foto
             </label>
-            <input type="file" class="form-control-file" id="FormControlFile" />
+            <input type="file" className="form-control-file" id="FormControlFile" />
             <br></br>
             <Button>Submit</Button>
             <br></br>

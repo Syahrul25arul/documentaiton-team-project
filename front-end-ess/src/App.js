@@ -1,8 +1,8 @@
 import "./App.css";
 import Login from "pages/Auth/Login/login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Register from "pages/Auth/register/register";
-import RegisterPrimer from "pages/Auth/register/register-primer";
+import Register from "pages/Auth/Register/register";
+import RegisterPrimer from "pages/Auth/Register/register-primer";
 
 function App() {
   return (
