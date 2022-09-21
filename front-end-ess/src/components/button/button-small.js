@@ -1,9 +1,10 @@
 import React from "react";
+import { NavLink } from 'react-router-dom'
 
 function ButtonSmall({ children }) {
   return (
-    <button
-      href="#"
+    <NavLink
+      to="#"
       className="btn text-white col-auto my-1"
       tabIndex="-1"
       role="button"
@@ -11,7 +12,7 @@ function ButtonSmall({ children }) {
       style={{ backgroundColor: "#194567", width: "50%" }}
     >
       {children}
-    </button>
+    </NavLink>
   );
 }
 

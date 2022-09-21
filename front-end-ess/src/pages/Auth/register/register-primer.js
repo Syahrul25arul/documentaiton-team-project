@@ -12,7 +12,7 @@ const RegisterPrimer = () => {
               src={Logo["Logo Celerates.png"]}
               className="img-fluit mb-5"
               style={{ width: "50%" }}
-            />
+              alt=""/>
             <h2 className="text-center d-block">Data Primer</h2>
             <br></br>
             <label htmlFor="inputTempat" className="form-label">
