@@ -9,3 +9,8 @@ const Logo = importAll(
   require.context("./assets/Logo", false, /\.(png|jpe?g|svg)$/)
 );
 export { Logo };
+
+const Users = importAll(
+  require.context("./assets/Users", false, /\.(png|jpe?g|svg)$/)
+);
+export { Users };
