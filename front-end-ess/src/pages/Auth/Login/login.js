@@ -1,5 +1,6 @@
 import { Logo } from "../../../Images";
 import { NavLink } from "react-router-dom";
+import { Button } from "components/button";
 
 const Login = () => {
   return (
@@ -32,14 +33,9 @@ const Login = () => {
               aria-describedby="passwordHelpBlock"
             />
             <br></br>
-            <NavLink to=""
-              className="btn btn-primary text-center d-block"
-              tabIndex="-1"
-              role="button"
-              aria-disabled="true"
-            >
+            <Button>
               Masuk
-            </NavLink>
+            </Button>
             <br></br>
             <label className="text-center d-block">
               Belum punya akun ? <NavLink to="/register">Daftar</NavLink>{" "}
