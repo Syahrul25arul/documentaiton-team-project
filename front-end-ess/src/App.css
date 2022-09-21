@@ -6,18 +6,13 @@
   margin: 10vh;
   margin-left: 10vh;
 }
-/* .container-fluid .form-labe{
-  width: 10%;
-} */
-
 .form-label .titles-navbars{
   position: absolute;
   max-width: 20px;
   height: 36px;
   left: 70px;
   top:18px;
-  
-  /* Headline / H6 Headline 14 */
+
   font-weight: 600;
   font-size: 15px;
   line-height: 19px;
@@ -38,7 +33,7 @@
   transition: all 0.5s ease;
 }
 .sidebar.active{
-  width: 60px;
+  display: none;
 }
 .sidebar .logo-details{
   height: 20%;
@@ -63,6 +58,18 @@
   width: 100%;
   text-align: left;
 }
+
+.sidebar .logo-details .btn-akun{
+  background-color: #fff;
+  width: 23%;
+  color: #194567;
+  font-size: 12px;
+  position: absolute;
+  display: flex;
+  top: 14%;
+  left: 34%;
+}
+
 .sidebar .nav-links{
   margin-top: 22px;
 }
@@ -130,7 +137,7 @@
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   transition: all 0.5s ease;
 }
-.sidebar.active ~ .home-section nav{
+.sidebar.active ~ nav{
   left: 60px;
   width: calc(100% - 60px);
 }
@@ -143,6 +150,12 @@
 nav .sidebar-button i{
   font-size: 35px;
   margin-right: 10px;
+  position: absolute;
+  left: 15%;
+  top: 21px;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
 }
 .home-section nav .search-box{
   position: relative;
@@ -382,7 +395,7 @@ nav .profile-details i{
     width: 240px;
   }
   .sidebar.active{
-    width: 220px;
+    display: none;
   }
   .home-section{
     width: calc(100% - 60px);
@@ -401,6 +414,17 @@ nav .profile-details i{
     width: calc(100% - 220px);
     left: 220px;
   }
+  
+  nav .sidebar-button i{
+    font-size: 35px;
+    margin-right: 10px;
+    position: absolute;
+    left: 19%;
+    top: 21px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+  }
 }
 @media (max-width: 1150px) {
   .home-content .sales-boxes{
@@ -414,11 +438,31 @@ nav .profile-details i{
   .home-content .sales-boxes .top-sales{
     margin: 0;
   }
+  nav .sidebar-button i{
+    font-size: 35px;
+    margin-right: 10px;
+    position: absolute;
+    left: 19%;
+    top: 21px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+  }
 }
 @media (max-width: 1000px) {
   .overview-boxes .box{
     width: calc(100% / 2 - 15px);
     margin-bottom: 15px;
+  }
+  nav .sidebar-button i{
+    font-size: 35px;
+    margin-right: 10px;
+    position: absolute;
+    left: 27%;
+    top: 21px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
   }
 }
 @media (max-width: 700px) {
@@ -443,29 +487,52 @@ nav .profile-details i{
   .sidebar.active ~ .home-section nav .profile-details{
     display: none;
   }
+
+  nav .sidebar-button i{
+    font-size: 35px;
+    margin-right: 10px;
+    position: absolute;
+    left: 41%;
+    top: 21px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+  }
 }
-@media (max-width: 400px) {
+@media (max-width: 480px) {
   .sidebar{
-    width: 0;
+    width: 240px;
   }
   .sidebar.active{
-    width: 60px;
+    width: 220px;
   }
   .home-section{
-    width: 100%;
-    left: 0;
+    width: calc(100% - 60px);
+    left: 60px;
   }
   .sidebar.active ~ .home-section{
-    left: 60px;
-    width: calc(100% - 60px);
+    left: 220px;
+    width: calc(100% - 220px);
+    overflow: hidden;
   }
   .home-section nav{
-    width: 100%;
-    left: 0;
+    width: calc(100% - 60px);
+    left: 60px;
   }
   .sidebar.active ~ .home-section nav{
-    left: 60px;
-    width: calc(100% - 60px);
+    width: calc(100% - 220px);
+    left: 220px;
+  }
+
+  nav .sidebar-button i{
+    font-size: 35px;
+    margin-right: 10px;
+    position: absolute;
+    left: 53%;
+    top: 21px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
   }
 }
 
@@ -492,6 +559,17 @@ nav .profile-details i{
   .sidebar.active ~ .home-section nav{
     width: calc(100% - 220px);
     left: 220px;
+  }
+
+  nav .sidebar-button i{
+    font-size: 35px;
+    margin-right: 10px;
+    position: absolute;
+    left: 53%;
+    top: 21px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
   }
 }
 @media (max-width: 1150px) {
