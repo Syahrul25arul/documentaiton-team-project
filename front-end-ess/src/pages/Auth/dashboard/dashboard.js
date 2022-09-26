@@ -3,6 +3,10 @@ import { Logo } from "Images";
 import { Users } from "Images";
 import { NavLink } from 'react-router-dom';
 import Image from 'react-bootstrap/Image';
+import BoxKehadiran from "components/dashcomponent/boxKehadiran";
+import BoxTimesheet from "components/dashcomponent/boxTimesheet";
+import BoxCuti from "components/dashcomponent/boxCuti";
+import BoxReimburstment from "components/dashcomponent/boxReimburstment";
 
 
 const Dashboard = () => {
@@ -21,7 +25,7 @@ const Dashboard = () => {
 
   return (
     <>
-    <nav className="navbar bg-light">
+    <nav className="navbar bg-light fixed-top">
       <div className="container-fluid">
         <NavLink className="navbar-brand" to="#">
           <img
@@ -84,6 +88,23 @@ const Dashboard = () => {
             </li>
           </ul>
     </aside>
+
+    <section className="home-content">
+      <div className="overview-boxes">
+        <div className="box">
+          <div className="right-side">
+            <div className="boxs-topic">Lengkapi data kepegawaianmu sekarang!</div>
+            <span className="topics-box">1 langkah terakhir agar kamu bisa mengajukan cuti dan reimburstment.</span>
+          </div>
+          <NavLink to="" className="btn-data">Lengkapi Data</NavLink>
+        </div>
+      </div>
+    </section>
+
+    <BoxKehadiran/>
+    <BoxTimesheet/>
+    <BoxCuti/>
+    <BoxReimburstment/>
     </>
   );
 };
