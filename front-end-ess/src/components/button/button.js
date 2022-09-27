@@ -1,6 +1,6 @@
 import React from "react";
 
-function Button({ children }) {
+function Button({ children, handle }) {
   return (
     <button
       href="#"
@@ -9,6 +9,7 @@ function Button({ children }) {
       role="button"
       aria-disabled="true"
       style={{ backgroundColor: "#194567", width: "100%" }}
+      onClick={handle}
     >
       {children}
     </button>

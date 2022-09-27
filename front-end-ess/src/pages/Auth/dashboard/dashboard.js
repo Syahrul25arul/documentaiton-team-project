@@ -1,28 +1,9 @@
 import React from "react";
 import { Logo } from "Images";
+import { Navbar } from "react-bootstrap";
 
 const Dashboard = () => {
-  return (
-    <nav className="navbar bg-light">
-      <div className="container-fluid">
-        <a className="navbar-brand" href="#">
-          <img
-            src={Logo["Celerates Logo Secondary.png"]}
-            alt="Bootstrap"
-            width={40}
-            height={40}
-            className="d-inline-block align-left"
-          />
-          <label htmlFor="ESS" className="form-label">
-            Employee Self Service
-          </label>
-        </a>
-        <button class="btn btn-sm btn-outline-secondary" type="button">
-          Keluar
-        </button>
-      </div>
-    </nav>
-  );
+  return <Navbar></Navbar>;
 };
 
 export default Dashboard;
