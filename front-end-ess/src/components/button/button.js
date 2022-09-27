@@ -1,9 +1,10 @@
 import React from "react";
+import { NavLink } from 'react-router-dom'
 
 function Button({ children, handle }) {
   return (
-    <button
-      href="#"
+    <NavLink
+      to="#"
       className="btn text-white text-center d-block"
       tabIndex="-1"
       role="button"
@@ -12,7 +13,7 @@ function Button({ children, handle }) {
       onClick={handle}
     >
       {children}
-    </button>
+    </NavLink>
   );
 }
 

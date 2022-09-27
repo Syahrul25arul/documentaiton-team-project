@@ -1,6 +1,9 @@
 import { Logo } from "../../../Images";
 import { NavLink } from "react-router-dom";
+<<<<<<< HEAD
 import { useState } from "react";
+=======
+>>>>>>> 3a77828fb0f1e583dbb290fc1801f21b8a9632e5
 import { Button } from "components/button";
 
 const Login = () => {
@@ -78,9 +81,15 @@ const Login = () => {
               }
             />
             <br></br>
+<<<<<<< HEAD
             <NavLink to="/dashboard" style={{ textDecoration: "none" }}>
               <Button handle={HandlerSubmit}>Masuk</Button>
             </NavLink>
+=======
+            <Button>
+              Masuk
+            </Button>
+>>>>>>> 3a77828fb0f1e583dbb290fc1801f21b8a9632e5
             <br></br>
             <label className="text-center d-block">
               Belum punya akun ? <NavLink to="/register">Daftar</NavLink>{" "}
