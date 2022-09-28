@@ -1,5 +1,11 @@
 import React from "react";
 import { Logo } from "Images";
+<<<<<<< HEAD
+import { Navbar } from "react-bootstrap";
+
+const Dashboard = () => {
+  return <Navbar></Navbar>;
+=======
 import { Users } from "Images";
 import { NavLink } from 'react-router-dom';
 import Image from 'react-bootstrap/Image';
@@ -107,6 +113,7 @@ const Dashboard = () => {
     <BoxReimburstment/>
     </>
   );
+>>>>>>> 3a77828fb0f1e583dbb290fc1801f21b8a9632e5
 };
 
 export default Dashboard;
