@@ -23,7 +23,7 @@ const RegisterPrimer = ({ requestBody, setRequestBody }) => {
     try {
       //  cek data yang di input  sudah valid apa belum
       for (const key in requestBody) {
-        if (requestBody[key] === "" && key != "photo_employee") {
+        if (requestBody[key] === "" && key !== "photo_employee") {
           setErrorField((prev) => ({ ...prev, [key]: "data masih kosong" }));
           setErrorStatus(true);
         }
@@ -41,7 +41,7 @@ const RegisterPrimer = ({ requestBody, setRequestBody }) => {
       let data = response.data;
 
       // cek response
-      if (data.code != 200) {
+      if (data.code !== 200) {
         // image yang tadi hapus
       }
 
