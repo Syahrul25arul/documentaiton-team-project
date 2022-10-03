@@ -1,0 +1,4 @@
+- jangan pake varchar untuk id
+- user_role nya jika dua pakai bolean saja, mungkin isAdmin ?
+- di table approval field whos_approve diganti aja dengan id_employee biar gak bingung.
+- konsisten dalam menggunakan bahasa, misal bahasa inggris atau bahasa indo

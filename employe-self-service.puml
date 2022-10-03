@@ -300,7 +300,7 @@ Client ||--o{ Project : Client project
 Project ||--o{ EmployeOnProject : project handled
 Employe ||-o{ EmployeOnProject : Employee handle projects
 EmployeePosition ||--|{ Approval : PIC approval
-EmployeePosition ||--|| AbsenConfiguration : PIC configuration untuk absensi
+Positino ||--|| AbsenConfiguration : PIC configuration untuk absensi
 Absensi ||--|{ Approval : Absensi Approval
 Employe ||--o{ Notes : Employee create notes
 Absensi ||--o{ Notes : notes absensi
